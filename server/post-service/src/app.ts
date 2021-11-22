@@ -1,7 +1,9 @@
 import express from "express";
+import bodyParser = require('body-parser')
 import { PostRouter } from "./routes/postRouter";
 
 const app = express();
+app.use(bodyParser.json());
 
 const hostname = '0.0.0.0'
 const port = 3000

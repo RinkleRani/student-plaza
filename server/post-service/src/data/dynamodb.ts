@@ -1,6 +1,7 @@
 import DynamoDB from "aws-sdk/clients/DynamoDB";
 import { Post } from "../models/post";
-
+import { config } from "../config"
+import { documentClient } from "../aws"
 
 class DynamoDbHelper {    
     docClient: DynamoDB.DocumentClient;
@@ -78,5 +79,5 @@ class DynamoDbHelper {
 
 }
 
-const dbhelper = new DynamoDbHelper("Post", new DynamoDB.DocumentClient());
+const dbhelper = new DynamoDbHelper(config.table_name, documentClient);
 export default dbhelper
