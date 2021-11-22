@@ -1,14 +1,19 @@
-const http = require('http')
+import express from "express";
+import { PostRouter } from "./routes/postRouter";
+
+const app = express();
 
 const hostname = '0.0.0.0'
 const port = 3000
 
-const server = http.createServer((req, res) => {
+app.get("/", (req, res) => {
     res.statusCode  = 200
     res.setHeader('content-Type', 'text/plain')
     res.end('Hello-World\n')
 })
 
-server.listen(port, hostname, () => {
+app.use("/post", PostRouter)
+
+app.listen(port, hostname, () => {
   console.log(`Server listening at http://${hostname}:${port}/`)
 })

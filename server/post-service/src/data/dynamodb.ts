@@ -77,3 +77,6 @@ class DynamoDbHelper {
     }
 
 }
+
+const dbhelper = new DynamoDbHelper("Post", new DynamoDB.DocumentClient());
+export default dbhelper
