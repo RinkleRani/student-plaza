@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+      "noImplicitAny": true,
+      "strictNullChecks": false,
+      "sourceMap": true,
+      "strict": true, 
+      "module": "commonjs",
+      "target": "es6",
+      "outDir": "./www",
+      "esModuleInterop": true,
+      "moduleResolution": "node",
+      "baseUrl": "/",
+      "paths": {
+        "*": [
+            "node_modules/*"
+        ]
+      }
+    },
+    "include": [
+      "src/**/*"
+    ]
+  }
