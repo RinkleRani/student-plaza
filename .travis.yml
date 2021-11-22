@@ -15,9 +15,8 @@ before_script:
 script:
   - docker --version
   - docker-compose -f server/docker-compose.yml build --parallel
-  - docker tag post-service "${DOCKER_USERNAME}/post-service"
+  - docker tag post-service "${DOCKER_USERNAME}/post-service:v1"
 
-# Tasks to perform after the process is successful. Formatting the Docker username and password as below enables you to programmatically log in without having the password exposed in logs.
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker push "${DOCKER_USERNAME}/post-service"
