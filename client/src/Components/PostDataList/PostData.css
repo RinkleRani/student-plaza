@@ -1,0 +1,31 @@
+.card {
+    border: 0.8px solid #1976D2;
+    box-shadow:0px 0px 10px 0 #BBDEFB;
+    padding-left: 30px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+  }
+  .br {
+    border-radius: 8px;  
+  }
+
+  .withIcon
+  {
+      display: flex;
+      align-items: center;
+  }
+  .withIcon svg {
+    margin-right: 8px;
+}
+
+/* .tag{
+    font-weight: bold;
+    background-color: #0D47A1;
+    border-radius: 30px;
+    padding: 16px;
+    color: #fff;
+} */

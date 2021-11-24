@@ -1,0 +1,110 @@
+
+.form-post-box-signup{
+    box-sizing: border-box;
+    width: 26%;
+    height: 56vh;
+    /*border: dotted #F55A00 5vw;*/
+    border:solid 1px rgb(21, 5, 240);
+    margin-top: 3vw;
+    margin-left: 68vw;
+    margin-right: 10vw;
+    padding: 3vw ;
+    position:relative; 
+    border-radius: 30px;
+    /* position:relative for .prevBtn and .nextBtn position:absolute; */
+}
+.post-data-input {
+  width:100%;
+  padding:10px;
+  border:0;
+  box-shadow:0 0 15px 4px rgba(0,0,0,0.06);
+  border-color: blue;
+  border-radius:10px;
+
+}
+.post-style-button{
+    padding:10px;
+    border:none;
+    background-color:#062afa;
+    color:#fff;
+    font-weight:600;
+    border-radius:5px;
+    width: 60%;
+}
+
+
+ .stylestate
+ {
+   font-weight: bold;
+   font-size: x-large;
+   margin-top: 0vw;
+   margin-bottom: 0vw;
+ }
+
+ .stylelogout
+ {
+    font-size: large;
+    font-weight: bold;
+ }
+
+ 
+ .stylesearchicon {
+    position: absolute;
+    margin-left: 7vw;
+    margin-top: 1.5vw;
+    
+ }
+
+ .stylesearchbutton
+ {
+    margin-left: 16px;
+    padding:10px;
+    border:none;
+    background-color:#062afa;
+    color:#fff;
+    font-weight:600;
+    border-radius:20px;
+    height:5vh;
+
+ }
+ .searchInputHolder
+ {
+   width: 70%
+ }
+
+ @media only screen and (min-width: 800px) {
+   .searchInputHolder {
+      width: 50%
+   }
+ }
+
+ .modal {
+  position: fixed; /* Stay in place */
+  z-index: 200; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: #fff;
+  border: 1px solid blue;
+  box-shadow: 5px 5px 5px black;
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+  background-color: #fefefe;
+  border-radius: 10px;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 90%; /* Could be more or less, depending on screen size */
+}
+
+
+@media only screen and (min-width: 800px) {
+  .modal-content {
+     width: 50%
+  }
+}
