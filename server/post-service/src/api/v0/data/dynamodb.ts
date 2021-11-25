@@ -3,6 +3,8 @@ import { Post } from "../models/post";
 import { config } from "../../../config"
 import { documentClient } from "../../../aws"
 import { Logger } from "tslog";
+import { PromiseResult } from "aws-sdk/lib/request";
+import { AWSError } from "aws-sdk";
 
 class DynamoDbHelper {  
     log: Logger = new Logger();  
@@ -14,14 +16,14 @@ class DynamoDbHelper {
         this.docClient = documentClient;
     }
 
-    async write(post:Post): Promise<Post> {
+    async write(post:Post): Promise<PromiseResult<DynamoDB.DocumentClient.PutItemOutput, AWSError>>{
         this.log.info("Creating a new post")
-        await this.docClient.put({
+        let result = await this.docClient.put({
             TableName: this.tableName,
             Item: post
         }).promise()
         this.log.debug("New post created", post)
-        return post
+        return result
     }
 
     async getPost(postId: string){
@@ -36,7 +38,7 @@ class DynamoDbHelper {
             }
         }).promise()
         this.log.debug("Item:", JSON.stringify(result))
-        return result.Items
+        return result
     }
 
     async getPostFromAccount(accountId: string){
@@ -51,21 +53,22 @@ class DynamoDbHelper {
         }).promise()
         console.log(JSON.stringify(result))
         this.log.debug("Item:", result)
-        return result.Items
+        return result
 
     }
 
     async getAllPosts() {
+
         this.log.debug("Fetching all the posts from dynamoDB")
         const result = await this.docClient.scan({
             TableName: this.tableName
         }).promise()
         this.log.debug("Items:",result)
-        return result.Items
+        return result
     }
 
     async update(post: Post){
-        await this.docClient.update({
+        let result = await this.docClient.update({
             TableName: this.tableName,
             Key: {
                 'postId': post.postId
@@ -84,23 +87,17 @@ class DynamoDbHelper {
                 "#cond": "condition"
               }
         }).promise()
-        this.log.info("Updated the post")
-
+        return result
     }
 
-    async delete(postId: string){
-        try {
-            console.log("postid in delete is:" + postId)
-            await this.docClient.delete({
-                TableName: this.tableName,
-                Key: { postId}
-            }).promise()
+    async delete(postId: string): Promise<PromiseResult<DynamoDB.DocumentClient.DeleteItemOutput, AWSError>> {
+        this.log.info("Deleting post with id: " + postId)
+        const result = await this.docClient.delete({
+            TableName: this.tableName,
+            Key: { postId}
+        }).promise()
 
-            console.log('Post deleted')
-        } catch (error) {
-            this.log.error(error)
-        }
-
+        return result
     }
 
 }

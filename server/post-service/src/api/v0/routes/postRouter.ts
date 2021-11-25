@@ -3,42 +3,81 @@ import { Post } from "../models/post";
 import dbhelper from '../data/dynamodb';
 import { v4 as uuid } from 'uuid';
 import { Logger } from "tslog";
+import { AWSError } from 'aws-sdk';
 
 const postRouter: Router = Router();
 var log = new Logger();
 
-// retun all the posts
-postRouter.get('/' , async (req:Request, res: Response) => {
+// get the posts 
+postRouter.get('/', async (req: Request, res: Response) => {
     const postId = req.query.postId
     const userId = req.query.userId
-    if (postId == null && userId == null){
+    if (postId == null && userId == null) {
         log.info("Routing to get all the posts")
-        const posts = await dbhelper.getAllPosts();
-        res.send(posts);
+        const posts = dbhelper.getAllPosts();
+        posts.then((function (data) {
+            if (data) {
+                log.info('Successfully got the posts');
+                res.send(data.Items)
+            } else {
+                log.info('Unable to create the post')
+                res.send({})
+            }
+        })).catch(function (err: AWSError) {
+            res.sendStatus(err.statusCode)
+            res.write(err.message)
+        });
+        
     }
-    else if (postId != null && userId == null){
-        if (typeof postId === 'string'){
+    else if (postId != null && userId == null) {
+        if (typeof postId === 'string') {
             log.info("Routing to get all the linked to userId")
-            const post = await dbhelper.getPost(postId);  
-            console.log(post)
-            res.send(post);
+            const post = dbhelper.getPost(postId);
+            post.then((function (data) {
+                if (data) {
+                    log.info('Successfully got the post');
+                    res.send(data.Items)
+                } else {
+                    log.info('Unable to create the post')
+                    res.send({})
+                }
+            })).catch(function (err: AWSError) {
+                res.sendStatus(err.statusCode)
+                res.write(err.message)
+            });
+        }
+        else {
+            res.sendStatus(400);
         }
     }
-    else if (userId!= null && postId == null){
-        if (typeof userId === 'string'){
+    else if (userId != null && postId == null) {
+        if (typeof userId === 'string') {
             log.info("Routing to get the post based on postId")
-            const post = await dbhelper.getPostFromAccount(userId);  
-            console.log(post)
-            res.send(post);
+            const post = dbhelper.getPostFromAccount(userId);
+            post.then((function (data) {
+                if (data) {
+                    log.info('Successfully got the post');
+                    res.send(data.Items)
+                } else {
+                    log.info('Unable to create the post')
+                    res.send({})
+                }
+            })).catch(function (err: AWSError) {
+                res.sendStatus(err.statusCode)
+                res.write(err.message)
+            });
+        }
+        else {
+            res.sendStatus(400);
         }
     }
 });
- 
+
 postRouter.post('/',
     async (req: Request, res: Response) => {
         const id: string = uuid();
         const post: Post = {
-            postId : id,
+            postId: id,
             userId: req.body.userId,
             title: req.body.title,
             price: req.body.price,
@@ -46,18 +85,28 @@ postRouter.post('/',
             condition: req.body.condition,
             description: req.body.description
         }
-    
-        const createdPost = await dbhelper.write(post)
-        log.info("Creating a new post")
-        res.send(createdPost)
+
+        const createdPost = dbhelper.write(post)
+        createdPost.then((function (data) {
+            if (data) {
+                log.info('Successfully creates the post');
+                res.sendStatus(201)
+            } else {
+                log.info('Unable to create the post')
+                res.sendStatus(400)
+            }
+        })).catch(function (err: AWSError) {
+            res.sendStatus(err.statusCode)
+            res.write(err.message)
+        });
     });
 
-postRouter.put('/', async(req:Request, res: Response) => {
+postRouter.put('/', async (req: Request, res: Response) => {
     const data = req.body;
 
     const post: Post = {
-        postId : data.postId,
-        userId : data.userId,
+        postId: data.postId,
+        userId: data.userId,
         title: data.title,
         price: data.price,
         category: data.category,
@@ -65,18 +114,42 @@ postRouter.put('/', async(req:Request, res: Response) => {
         description: data.description
     }
 
-    const createdPost = await dbhelper.update(post);
-    log.info("Updating the post")
-    res.sendStatus(204);
+    const createdPost = dbhelper.update(post);
+    createdPost.then(function (data) {
+        if (!data.Attributes) {
+            log.info('Unable to update the post')
+            res.sendStatus(404)
+        } else {
+            log.info('Successfully updated the post');
+            res.sendStatus(200)
+        }
+    }).catch(function (err: AWSError) {
+        res.sendStatus(err.statusCode)
+        res.write(err.message)
+    });
 });
 
-postRouter.delete('/', async(req:Request, res: Response) => {
+postRouter.delete('/', async (req: Request, res: Response) => {
     const postId = req.query.postId;
-    if (typeof postId === 'string'){
+
+    if (typeof postId === 'string') {
         log.info("Routing to delete the post based on given postId")
-        await dbhelper.delete(postId);
-        res.sendStatus(204);
+        const result = dbhelper.delete(postId);
+        result.then(function (data) {
+            if (!data.Attributes) {
+                log.info('Unable to delete the post, not found')
+                res.sendStatus(404)
+            } else {
+                log.info('Successfully deleted the post with id: ' + postId);
+                res.sendStatus(204)
+            }
+        }).catch(function (err: AWSError) {
+            res.sendStatus(err.statusCode)
+            res.write(err.message)
+        });
+    } else {
+        res.sendStatus(400)
     }
 });
 
-export const PostRouter: Router = postRouter; 
+export const PostRouter: Router = postRouter;
