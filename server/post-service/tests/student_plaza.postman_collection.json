@@ -1,0 +1,103 @@
+{
+	"info": {
+		"_postman_id": "f69f2683-0162-4b7c-a59f-aa732efcb772",
+		"name": "New Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get a post",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain_name}}/api/v0/post/?postId=2ee9e395-636e-4dc6-bd38-2d83405623ac",
+					"host": [
+						"{{domain_name}}"
+					],
+					"path": [
+						"api",
+						"v0",
+						"post",
+						""
+					],
+					"query": [
+						{
+							"key": "postId",
+							"value": "2ee9e395-636e-4dc6-bd38-2d83405623ac"
+						}
+					]
+				},
+				"description": "Tests for PostService of StudentPlaza"
+			},
+			"response": []
+		},
+		{
+			"name": "Create a post",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Apple watch\",\n    \"userId\": \"123rt57hhfcb7455\",\n    \"description\": \"Brand new watch\",\n    \"category\": \"Electronics\",\n    \"price\": 300,\n    \"condition\": \"Used\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{domain_name}}/api/v0/post/",
+					"host": [
+						"{{domain_name}}"
+					],
+					"path": [
+						"api",
+						"v0",
+						"post",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "domain_name",
+			"value": "localhost:3000"
+		}
+	]
+}
