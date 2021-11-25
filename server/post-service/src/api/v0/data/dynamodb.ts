@@ -2,8 +2,10 @@ import DynamoDB from "aws-sdk/clients/DynamoDB";
 import { Post } from "../models/post";
 import { config } from "../../../config"
 import { documentClient } from "../../../aws"
+import { Logger } from "tslog";
 
-class DynamoDbHelper {    
+class DynamoDbHelper {  
+    log: Logger = new Logger();  
     docClient: DynamoDB.DocumentClient;
     tableName: string;
 
@@ -13,17 +15,19 @@ class DynamoDbHelper {
     }
 
     async write(post:Post): Promise<Post> {
+        this.log.info("Creating a new post")
         await this.docClient.put({
             TableName: this.tableName,
             Item: post
         }).promise()
-
+        this.log.debug("New post created", post)
         return post
     }
 
     async getPost(postId: string){
-        console.log("table name: " + this.tableName)
-        console.log("post id :" + postId)
+        this.log.info("Fetching the post from dynamoDB")
+        this.log.info("table name: ", this.tableName)
+        this.log.info("post id :", postId)
         const result = await this.docClient.query({
             TableName: this.tableName,
             KeyConditionExpression: "postId = :postId",
@@ -31,13 +35,13 @@ class DynamoDbHelper {
                 ":postId": postId
             }
         }).promise()
-        console.log(JSON.stringify(result))
+        this.log.debug("Item:", JSON.stringify(result))
         return result.Items
     }
 
     async getPostFromAccount(accountId: string){
-        console.log("table name: " + this.tableName)
-        console.log("account id:" + accountId)
+        this.log.info("table name: ", this.tableName)
+        this.log.info("accountId:", accountId)
         const result = await this.docClient.query({
             TableName: this.tableName,
             KeyConditionExpression: "accountId = :accountId",
@@ -46,16 +50,17 @@ class DynamoDbHelper {
             }
         }).promise()
         console.log(JSON.stringify(result))
+        this.log.debug("Item:", result)
         return result.Items
 
     }
 
     async getAllPosts() {
-        console.log("In the getAllPosts method......")
+        this.log.debug("Fetching all the posts from dynamoDB")
         const result = await this.docClient.scan({
             TableName: this.tableName
         }).promise()
-        console.log("get all the posts:" + JSON.stringify(result))
+        this.log.debug("Items:",result)
         return result.Items
     }
 
@@ -79,6 +84,7 @@ class DynamoDbHelper {
                 "#cond": "condition"
               }
         }).promise()
+        this.log.info("Updated the post")
 
     }
 
@@ -92,7 +98,7 @@ class DynamoDbHelper {
 
             console.log('Post deleted')
         } catch (error) {
-            console.log(error)
+            this.log.error(error)
         }
 
     }
