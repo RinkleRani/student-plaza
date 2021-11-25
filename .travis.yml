@@ -15,7 +15,7 @@ before_script:
 script:
   - docker --version
   - docker-compose -f server/docker-compose.yml build --parallel
-  - docker tag post-service "${DOCKER_USERNAME}/post-service:v1"
+  - docker tag post-service "${DOCKER_USERNAME}/post-service:v2"
 
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
