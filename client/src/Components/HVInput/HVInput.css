@@ -1,0 +1,50 @@
+
+.myinput:focus-visible {
+    outline: none;
+}
+
+.stylesearch
+ {
+     border:0;
+     box-shadow:0 0 15px 4px rgba(0,0,0,0.06);
+     border-color: blue;
+     border:solid 1px blue;
+     border-radius:20px;
+     
+ }
+
+ .results-container {
+	display: flex;
+	flex-flow: wrap;
+}
+.result-items {
+	position: relative;
+	padding: 16px;
+	border: 1px solid #898989;
+	margin: 16px;
+	text-align: center;
+	min-width: 200px;
+	text-decoration: none;
+	box-shadow: 2px 2px 2px #898989;
+}
+.image-username {
+	color: coral;
+	font-size: 18px;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	margin: 0;
+	background: rgba(0, 0, 0, 0.8);
+	padding: 5px 10px;
+}
+.image {
+	width: 100%;
+	height: 200px;
+}
+.image-wrapper {
+	display: flex;
+	align-items: center;
+	box-sizing: border-box;
+	height: 100%;
+	justify-content: center;
+}
