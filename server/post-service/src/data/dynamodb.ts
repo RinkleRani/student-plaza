@@ -22,25 +22,40 @@ class DynamoDbHelper {
     }
 
     async getPost(postId: string){
+        console.log("table name: " + this.tableName)
+        console.log("post id :" + postId)
         const result = await this.docClient.query({
             TableName: this.tableName,
-            KeyConditionExpression: "#postId = :postId",
-            ExpressionAttributeNames: {
-                "#postId": "postId"
-            },
-            ExpressionAttributeValues: {
+            KeyConditionExpression: "postId = :postId",
+            ExpressionAttributeValues: {    
                 ":postId": postId
             }
         }).promise()
-
+        console.log(JSON.stringify(result))
         return result.Items
     }
 
-    async getAllPosts() {
+    async getPostFromAccount(accountId: string){
+        console.log("table name: " + this.tableName)
+        console.log("account id:" + accountId)
         const result = await this.docClient.query({
+            TableName: this.tableName,
+            KeyConditionExpression: "accountId = :accountId",
+            ExpressionAttributeValues:{
+                ":accountId": accountId
+            }
+        }).promise()
+        console.log(JSON.stringify(result))
+        return result.Items
+
+    }
+
+    async getAllPosts() {
+        console.log("In the getAllPosts method......")
+        const result = await this.docClient.scan({
             TableName: this.tableName
         }).promise()
-
+        console.log("get all the posts:" + JSON.stringify(result))
         return result.Items
     }
 
@@ -50,27 +65,32 @@ class DynamoDbHelper {
             Key: {
                 'postId': post.postId
             },
-            UpdateExpression: 'set #title = :t, price = :p, category = :ctg, condition = :cond, description = :desc', 
+            UpdateExpression: 'set title = :t, userId = :u, price = :p, category = :ctg, #cond = :cond, description = :desc', 
             ExpressionAttributeValues: {
                 ':t': post.title,
+                ':u': post.userId,
                 ':p': post.price,
                 ':ctg': post.category,
                 ':cond': post.condition,
                 ':desc': post.description
 
-            }
+            },
+            ExpressionAttributeNames: {
+                "#cond": "condition"
+              }
         }).promise()
 
     }
 
     async delete(postId: string){
         try {
+            console.log("postid in delete is:" + postId)
             await this.docClient.delete({
                 TableName: this.tableName,
                 Key: { postId}
             }).promise()
 
-            console.log('Todo item deleted')
+            console.log('Post deleted')
         } catch (error) {
             console.log(error)
         }

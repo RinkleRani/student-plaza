@@ -14,7 +14,7 @@ app.get("/", (req, res) => {
     res.end('Hello-World\n')
 })
 
-app.use("/post", PostRouter)
+app.use("/post", PostRouter)  
 
 app.listen(port, hostname, () => {
   console.log(`Server listening at http://${hostname}:${port}/`)
