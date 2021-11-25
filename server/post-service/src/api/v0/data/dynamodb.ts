@@ -1,7 +1,7 @@
 import DynamoDB from "aws-sdk/clients/DynamoDB";
 import { Post } from "../models/post";
-import { config } from "../config"
-import { documentClient } from "../aws"
+import { config } from "../../../config"
+import { documentClient } from "../../../aws"
 
 class DynamoDbHelper {    
     docClient: DynamoDB.DocumentClient;
