@@ -69,18 +69,29 @@ class SignUp extends React.PureComponent {
     }
 
     handleSubmit = (e) => {
-        //const navigate = useNavigate();
+        if(!this.state.email.includes('@scu.edu')){
+            alert(JSON.stringify("Sorry! This website is only open for SCU Students."));
+            this.setState({
+                  email: "",
+                  fullName: "",
+                  phone: "",
+                  pass: "",
+                  cpass: "",
+              });
+        }
+        
+       else{ 
         alert(JSON.stringify(this.state));
-        //navigate('/home');
-
-    Axios.post("http://localhost:3001/register",{emailInp:this.state.email,passwordInp:this.state.cpass,fullNameInp:this.state.fullName,contactInp:this.state.phone
-    }).then(()=>{
+        Axios.post("http://localhost:3001/register",{emailInp:this.state.email,passwordInp:this.state.cpass,fullNameInp:this.state.fullName,contactInp:this.state.phone
+        }).then(()=>{
         alert("successful insert");
-    });
-
-
-
+        });
         window.location.href='/';
+
+         //const navigate = useNavigate();
+        //navigate('/home');
+    }
+
     }
 }
 export default SignUp
