@@ -79,16 +79,17 @@ class SignUp extends React.PureComponent {
                   cpass: "",
               });
         }
-        //const navigate = useNavigate();
+        
        else{ 
         alert(JSON.stringify(this.state));
-        //navigate('/home');
-        
         Axios.post("http://localhost:3001/register",{emailInp:this.state.email,passwordInp:this.state.cpass,fullNameInp:this.state.fullName,contactInp:this.state.phone
-     }).then(()=>{
+        }).then(()=>{
         alert("successful insert");
         });
         window.location.href='/';
+
+         //const navigate = useNavigate();
+        //navigate('/home');
     }
 
     }

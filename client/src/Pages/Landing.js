@@ -13,6 +13,7 @@ class Landing extends React.PureComponent {
         this.state = {
             user: "",
             password: "",
+            loginStatus: "",
             showSignUpPost: false
 
         };
@@ -76,6 +77,10 @@ class Landing extends React.PureComponent {
                             <div>
                                 <button className="style-button" type="submit" onClick={this.handleSubmit}>Sign-In</button>
                             </div>
+                            <br/>
+
+                            <p>{this.state.loginStatus}</p>
+
                             <br />
                             <div style={{ display: "flex", flexDirection: "row" }}>
                                 <div className="styleques">Don't have an Account? </div>
@@ -112,11 +117,23 @@ class Landing extends React.PureComponent {
         //navigate('/home');
         //this.state.user
         //this.state.password
-        Axios.post("http://localhost:3001/register",{userNameInp:this.state.user,passwordInp:this.state.password
-    }).then(()=>{
-        alert("successful insert");
+        
+        Axios.post("http://localhost:3001/login",{emailInp:this.state.user,passwordInp:this.state.password
+    }).then((response)=>{
+        if(response.data.message){
+            console.log(response.data);
+            this.setState({loginStatus:response.data.message })
+            //this.state.loginStatus = response.data.message;
+        }
+        else{
+            console.log(response.data);
+            this.setState({loginStatus: response.data[0].name});
+            window.location.href='/home';
+        }
     });
-        window.location.href='/home';
+
+
+       // window.location.href='/home';
     }
 }
 export default Landing
