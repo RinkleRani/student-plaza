@@ -117,7 +117,10 @@ class Landing extends React.PureComponent {
         //navigate('/home');
         //this.state.user
         //this.state.password
-        
+
+        //Need to remove the below navigation once DB set up is complete
+        window.location.href='/home';
+
         Axios.post("http://localhost:3001/login",{emailInp:this.state.user,passwordInp:this.state.password
     }).then((response)=>{
         if(response.data.message){
@@ -133,7 +136,7 @@ class Landing extends React.PureComponent {
     });
 
 
-       // window.location.href='/home';
+      
     }
 }
 export default Landing
