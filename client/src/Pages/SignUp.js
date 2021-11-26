@@ -4,6 +4,7 @@ import { FaPhoneAlt, FaUser} from 'react-icons/fa';
 import { FaEnvelope } from 'react-icons/fa';
 import { FaKey } from 'react-icons/fa';
 import './SignUp.css';
+import Axios from "axios";
 
 
 class SignUp extends React.PureComponent {
@@ -71,6 +72,15 @@ class SignUp extends React.PureComponent {
         //const navigate = useNavigate();
         alert(JSON.stringify(this.state));
         //navigate('/home');
+
+    Axios.post("http://localhost:3001/register",{emailInp:this.state.email,passwordInp:this.state.cpass,fullNameInp:this.state.fullName,contactInp:this.state.phone
+    }).then(()=>{
+        alert("successful insert");
+    });
+
+
+
+        window.location.href='/';
     }
 }
 export default SignUp

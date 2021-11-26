@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import './../App.css';
 import './Landing.css';
 import SignUp from './SignUp.js';
+import Axios from "axios";
 
 class Landing extends React.PureComponent {
     constructor(props) {
@@ -67,6 +68,7 @@ class Landing extends React.PureComponent {
                                 <input type="password" id="styletext" name="password" className="datainput" value={this.state.password} onChange={this.handleInputChange} placeholder="Enter password" />
                             </label>
 
+                            
                             <br />
                             <br />
                             <br />
@@ -108,6 +110,12 @@ class Landing extends React.PureComponent {
         //const navigate = useNavigate();
         //alert(JSON.stringify(this.state));
         //navigate('/home');
+        //this.state.user
+        //this.state.password
+        Axios.post("http://localhost:3001/register",{userNameInp:this.state.user,passwordInp:this.state.password
+    }).then(()=>{
+        alert("successful insert");
+    });
         window.location.href='/home';
     }
 }

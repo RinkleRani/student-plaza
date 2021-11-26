@@ -1,8 +1,12 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+
 import './Login.css';
+
 class Login extends React.PureComponent {
+   
     constructor(props) {
         super(props);
+
         this.state={
             user: "",
             password: "",
@@ -10,6 +14,9 @@ class Login extends React.PureComponent {
         }
 
     }
+
+    
+
     render() {
         return (
                 <div className="form-box">                   
@@ -25,6 +32,8 @@ class Login extends React.PureComponent {
                             <p>Password</p>
                             <input name="password" className="data-input" onChange={this.handleInputChange} value={this.state.password} placeholder="Enter your password"/>
                         </label>
+
+                        
                  
                     <br />
                     <br />
@@ -44,6 +53,8 @@ class Login extends React.PureComponent {
 }
 
  handleSubmit = (e) => {
+     
+   
     //const navigate = useNavigate();
     alert("hello world");
     //navigate('/home');
@@ -51,4 +62,8 @@ class Login extends React.PureComponent {
 
     
 }
+
+
+
+
 export default Login
