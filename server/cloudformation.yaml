@@ -10,11 +10,118 @@ Resources:
       AttributeDefinitions:
         - AttributeName: postId
           AttributeType: S
-        - AttributeName: userId
-          AttributeType: S
       KeySchema:
         - AttributeName: postId
           KeyType: HASH
-      BillingMode: PAY_PER_REQUEST
-
-                    
+      ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+      StreamSpecification:
+          StreamViewType: 'NEW_IMAGE'
+  EsIndexerFunction:
+      Type: 'AWS::Lambda::Function'
+      Properties:
+        Handler: 'index.handler'
+        Runtime: nodejs12.x
+        Role: !GetAtt LambdaRole.Arn
+        Environment:
+          Variables:
+            ES_ENDPOINT: !GetAtt ElasticsearchDomain.DomainEndpoint
+            ES_REGION: !Ref AWS::Region
+        Code:
+          ZipFile: |
+            var AWS = require('aws-sdk');
+            var path = require('path');
+            var esDomain = {
+                endpoint: process.env.ES_ENDPOINT,
+                region: process.env.ES_REGION,
+                index: 'test',
+                doctype: 'post'
+            };
+            var endpoint =  new AWS.Endpoint(esDomain.endpoint);
+            var creds = new AWS.EnvironmentCredentials('AWS');
+            exports.handler = (event, context, callback) => {
+              event.Records.forEach(record => {
+                postDocumentToES(record.dynamodb.NewImage, context);
+              });
+            }
+            function postDocumentToES(doc, context) {
+                var req = new AWS.HttpRequest(endpoint);
+                req.method = 'POST';
+                req.path = path.join('/', esDomain.index, esDomain.doctype);
+                req.region = esDomain.region;
+                req.body = JSON.stringify(doc);
+                req.headers['presigned-expires'] = false;
+                req.headers['Host'] = endpoint.host;
+                // Sign the request (Sigv4)
+                var signer = new AWS.Signers.V4(req, 'es');
+                signer.addAuthorization(creds, new Date());
+                // Post document to ES
+                var send = new AWS.NodeHttpClient();
+                send.handleRequest(req, null, function(httpResp) {
+                    var body = '';
+                    httpResp.on('data', chunk => body += chunk);
+                    httpResp.on('end', chunk => context.succeed());
+                }, function(err) {
+                    console.log('Error: ' + err);
+                    context.fail();
+                });
+            }
+  TableStreamLambdaMapping:
+    Type: 'AWS::Lambda::EventSourceMapping'
+    Properties:
+      BatchSize: 2
+      EventSourceArn: !GetAtt PostDynamoDBTable.StreamArn
+      FunctionName: !GetAtt EsIndexerFunction.Arn
+      StartingPosition: 'LATEST'
+  LambdaRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: 'Allow'
+          Principal:
+            Service: 'lambda.amazonaws.com'
+          Action: 'sts:AssumeRole'
+      Path: '/'
+      Policies:
+        - PolicyName: 'LambdaRolePolicy'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+            - Effect: 'Allow'
+              Action:
+              - logs:CreateLogGroup
+              - logs:CreateLogStream
+              - logs:PutLogEvents
+              Resource: 'arn:aws:logs:*:*:*'
+            - Effect: 'Allow'
+              Action:
+              - dynamodb:DescribeStream
+              - dynamodb:GetRecords
+              - dynamodb:GetShardIterator
+              - dynamodb:ListStreams
+              Resource: !GetAtt PostDynamoDBTable.StreamArn
+  ElasticsearchDomain:
+    Type: 'AWS::Elasticsearch::Domain'
+    Properties:
+      DomainName: 'es-post'
+      ElasticsearchClusterConfig:
+        InstanceType: 't2.micro.elasticsearch'
+        InstanceCount: 1
+      EBSOptions:
+        EBSEnabled: true
+        Iops: 0
+        VolumeSize: 10
+        VolumeType: 'standard'
+      AccessPolicies:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: 'Allow'
+            Principal:
+              AWS: !GetAtt LambdaRole.Arn
+            Action: 'es:*'
+            Resource: '*'
+      AdvancedOptions:
+        rest.action.multi.allow_explicit_index: 'true'
