@@ -209,3 +209,41 @@ Resources:
           - !Ref StudentPlazaPublicSubnet01
           - !Ref StudentPlazaPublicSubnet02
     DependsOn: [StudentPlazaEKSClusterIAMRole, StudentPlazaPublicSubnet01,StudentPlazaPublicSubnet02, StudentPlazaSecurityGroup]
+  StudentPlazaNodeInstanceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+              - ec2.amazonaws.com
+            Action:
+              - "sts:AssumeRole"
+      RoleName: 'StudentPlazaNodeInstanceRole'
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
+        - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
+        - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly
+      Path: /
+  StudentPlazaNodeGroup:
+    Type: AWS::EKS::Nodegroup
+    Properties:
+      ClusterName: StudentPlazaEKSCluster
+      NodeRole: 
+        "Fn::GetAtt": ["StudentPlazaNodeInstanceRole", "Arn"]
+      AmiType: AL2_x86_64
+      InstanceTypes: 
+        - t2.micro
+      NodegroupName: StudentPlazaNodeGroup
+      RemoteAccess:
+        Ec2SshKey: student-plaza-node-group-key
+      ScalingConfig:
+        MinSize: 2
+        DesiredSize: 3
+        MaxSize: 4
+      Subnets:
+        - !Ref StudentPlazaPublicSubnet01
+        - !Ref StudentPlazaPublicSubnet02
+    DependsOn: [StudentPlazaEKSCluster, StudentPlazaNodeInstanceRole]
