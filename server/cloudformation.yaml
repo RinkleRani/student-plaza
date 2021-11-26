@@ -125,3 +125,87 @@ Resources:
             Resource: '*'
       AdvancedOptions:
         rest.action.multi.allow_explicit_index: 'true'
+  StudentPlazaEKSClusterIAMRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - eks.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      RoleName: 'StudentPlazaEKSClusterIAMRole'
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonEKSClusterPolicy
+        - arn:aws:iam::aws:policy/AmazonEKSServicePolicy
+  StudentPlazaEKSClusterVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 192.168.0.0/16
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+  StudentPlazaInternetGateway:
+    Type: AWS::EC2::InternetGateway
+  StudentPlazaVPCGatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      InternetGatewayId: !Ref StudentPlazaInternetGateway
+      VpcId: !Ref StudentPlazaEKSClusterVPC
+  StudentPlazaPublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref StudentPlazaEKSClusterVPC
+  StudentPlazaPublicRoute:
+    DependsOn: StudentPlazaVPCGatewayAttachment
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: !Ref StudentPlazaPublicRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref StudentPlazaInternetGateway
+  StudentPlazaPublicSubnet01:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: us-west-2a
+      MapPublicIpOnLaunch: true
+      CidrBlock: 192.168.0.0/18
+      VpcId:
+        Ref: StudentPlazaEKSClusterVPC
+  StudentPlazaPublicSubnet02:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: us-west-2d
+      MapPublicIpOnLaunch: true
+      CidrBlock: 192.168.64.0/18
+      VpcId:
+        Ref: StudentPlazaEKSClusterVPC
+  StudentPlazaPublicSubnet01RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref StudentPlazaPublicSubnet01
+      RouteTableId: !Ref StudentPlazaPublicRouteTable
+  StudentPlazaPublicSubnet02RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref StudentPlazaPublicSubnet02
+      RouteTableId: !Ref StudentPlazaPublicRouteTable
+  StudentPlazaSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Cluster communication with worker nodes
+      VpcId: !Ref StudentPlazaEKSClusterVPC
+  StudentPlazaEKSCluster:
+    Type: AWS::EKS::Cluster
+    Properties:
+      Name: "StudentPlazaEKSCluster"
+      RoleArn:
+        "Fn::GetAtt": ["StudentPlazaEKSClusterIAMRole", "Arn"]
+      ResourcesVpcConfig:
+        SecurityGroupIds:
+          - !Ref StudentPlazaSecurityGroup
+        SubnetIds:
+          - !Ref StudentPlazaPublicSubnet01
+          - !Ref StudentPlazaPublicSubnet02
+    DependsOn: [StudentPlazaEKSClusterIAMRole, StudentPlazaPublicSubnet01,StudentPlazaPublicSubnet02, StudentPlazaSecurityGroup]
