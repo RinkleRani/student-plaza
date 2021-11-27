@@ -59,7 +59,7 @@ class PostData extends React.Component {
         return (
             <div>
                 {
-                    //this.state.data.hits.hits.map(this.renderPost)
+                    this.state.data.hits.hits.map(this.renderPost)
                 }
             </div>
         )

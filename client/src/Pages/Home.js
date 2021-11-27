@@ -14,7 +14,7 @@ class Home extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            searchkeyInInput:"",
+            searchkeyInInput:"*",
             showCreatePost: false,
         }
 
@@ -85,7 +85,7 @@ class Home extends React.PureComponent {
     hideCreatePost = () => {
         this.setState({ showCreatePost: false });
         if (this.postData.current) {
-            this.postData.current.fetchData("");
+            this.postData.current.fetchData("*");
         }
     }
     handleInputChange = (e) => {
