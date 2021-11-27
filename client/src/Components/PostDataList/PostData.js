@@ -15,15 +15,14 @@ class PostData extends React.Component {
     }
 
     async componentDidMount() {
-        await this.fetchData(this.props.searchKey);
+        await this.fetchData(this.props.searchkeyInInput);
     }
-
-    fetchData = async (searchKey) => {
-        this.setState({ isDataFetching: true, data: [] });
+    fetchData = async (searchkeyInInput) => {
+         this.setState({ isDataFetching: true, data: [] });
 
         try {
             const fetchResult = await fetch(
-                "https://search-es-post-qypyn2r3s3iwgpz27h4ii7rlly.us-west-2.es.amazonaws.com/_search/?pretty=true&q=" + searchKey,
+                "https://search-es-post-qypyn2r3s3iwgpz27h4ii7rlly.us-west-2.es.amazonaws.com/_search/?pretty=true&q=" + searchkeyInInput,
                 {
                     method: "GET",
                     headers: {}
@@ -31,7 +30,7 @@ class PostData extends React.Component {
             );
             if (fetchResult.status === 200) {
                 const data = await fetchResult.json();
-                console.log("search key is" , searchKey);
+                console.log("search key is" , searchkeyInInput);
                 console.log("loading is done ", data);
                 this.setState({ isDataFetching: false, data: data });
             }
@@ -42,6 +41,7 @@ class PostData extends React.Component {
             this.setState({ isDataFetching: false });
         }
     }
+
     render() {
         return (
             <div style={{ marginLeft: "3rem", marginTop: "2rem" }}>
@@ -76,19 +76,19 @@ class PostData extends React.Component {
                     <div className="withIcon">
                         <FaAngellist />
                         <div className="tag">
-                            {post.condition}
+                            {post._source.condition.S}
                         </div>
                     </div>
                     <div className="withIcon">
                         <FaDollarSign />
                         <div className="tag">
-                            {post._source.price.S}
+                            {post._source.price.N}
                         </div>
                     </div>
                     <div className="withIcon">
                         <FaTags />
                         <div className="tag">
-                            {post.category}
+                            {post._source.category.S}
                         </div>
                     </div>
                 </div>
