@@ -50,8 +50,25 @@ app.post('/login',(req,res)=>{
             }
         else{
                 res.send({message:"Invalid email / password!"})
-            }
-        
-
+            }        
     });
 })
+
+
+
+app.get("/userlogin",(req,res)=>{
+
+    const email = req.body.emailInp ;
+    const password = req.body.passwordInp ;
+    res.send("hi");
+
+
+
+    // const sqlSELECT = "SELECT * FROM `LoginDB`.`users`";
+    // db.query(sqlSELECT,(err,result)=>{
+    //   //console.log(result)
+    //   res.send(result);
+    // })
+
+
+  })

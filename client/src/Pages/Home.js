@@ -6,6 +6,7 @@ import HVInput from '../Components/HVInput/HVInput'
 import CreatePost from '../Components/CreatePost/CreatePost';
 import PostData from '../Components/PostDataList/PostData';
 import Landing from './Landing';
+import Axios from "axios";
 
 class Home extends React.PureComponent {
     postData = React.createRef();
@@ -96,6 +97,16 @@ class Home extends React.PureComponent {
         }
         let userid = window.localStorage.getItem('userID');
         alert(userid);
+        
+        Axios.get("https://search-es-post-qypyn2r3s3iwgpz27h4ii7rlly.us-west-2.es.amazonaws.com/_search/?pretty=true&q="+this.state.searchkeyInInput)
+        .then((response)=>{
+            console.log("testinggg");
+            console.log(response.data.hits.hits[0]._source);
+            console.log(response)
+            
+
+        })
+
     }
 }
 

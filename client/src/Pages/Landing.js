@@ -151,17 +151,18 @@ class Landing extends React.PureComponent {
       // way to share data to creatpost API call in Home component.
         //window.localStorage.setItem('userID','111');
        // window.location.href='/home';
+       window.location.href='/home';
 
         Axios.post("http://localhost:3001/login",{emailInp:this.state.user,passwordInp:this.state.password
     }).then((response)=>{
         if(response.data.message){
             console.log(response.data);
             this.setState({loginStatus:response.data.message })
-            //this.state.loginStatus = response.data.message;
         }
         else{
             console.log(response.data);
             this.setState({loginStatus: response.data[0].name});
+          //  Axios.get("http://localhost:3001/userlogin",{emailInp:this.state.user,passwordInp:this.state.password}).then((response)=>{console.log(response)});
             window.location.href='/home';
         }
     });
