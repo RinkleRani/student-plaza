@@ -52,7 +52,7 @@ class Home extends React.PureComponent {
                     </div>
                     <div style={{ display: "flex", flexDirection: "row", width: "100%", alignItems: "center" }}>
                         <div style={{ paddingLeft: "3rem" }} className="searchInputHolder">
-                            <HVInput icon={<FaSearch />} name="searchkeyInInput" value={this.state.searchkey} onChange={this.handleInputChange} placeholder="Type your search query" />
+                            <HVInput icon={<FaSearch />} name="searchkeyInInput" value={this.state.searchkeyInInput} onChange={this.handleInputChange} placeholder="Type your search query" />
                         </div>
                         <div >
                             <input type="button" className="stylesearchbutton" onClick={this.handleSubmit} value="View Posts" />
@@ -60,7 +60,7 @@ class Home extends React.PureComponent {
                     </div>
 
                     <div>
-                        <PostData ref={this.postData} searchKey={this.state.searchKeyForPostData} />
+                        <PostData ref={this.postData} searchKey={this.state.searchkeyInInput} />
                     </div>
 
 

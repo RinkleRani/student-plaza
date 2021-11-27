@@ -1,1 +1,1 @@
-export const API_ROOT = "https://cloopscb.azurewebsites.net";
+export const API_ROOT = "http://0.0.0.0:5000/";

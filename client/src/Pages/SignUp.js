@@ -24,6 +24,7 @@ class SignUp extends React.PureComponent {
     <div className="backstyle">
         <div>
                    <p className="signid"> Full Name </p>
+                   <div style={{display: "flex", alignItems: "center"}}  ></div>
                    <FaUser className="icon-style" />
                     <input className="data-input" onChange={this.handleInputChange} name="fullName" value={this.state.fullName} ></input>
                     <br/>

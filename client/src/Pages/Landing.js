@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import './../App.css';
 import './Landing.css';
 import SignUp from './SignUp.js';
+import { API_ROOT } from '../constants';
 
 class Landing extends React.PureComponent {
     constructor(props) {
@@ -12,7 +13,8 @@ class Landing extends React.PureComponent {
         this.state = {
             user: "",
             password: "",
-            showSignUpPost: false
+            showSignUpPost: false,
+            isLoading: false
 
         };
     }
@@ -47,8 +49,6 @@ class Landing extends React.PureComponent {
                                 <div className="style-name">
                                     STUDENT - PLAZA
                                 </div>
-
-                                <div className="style-input"><Link to="Home">Home</Link></div>
                             </div>
                         </div>
 
@@ -72,7 +72,7 @@ class Landing extends React.PureComponent {
                             <br />
                             <br></br>
                             <div>
-                                <button className="style-button" type="submit" onClick={this.handleSubmit}>Sign-In</button>
+                                <input className="style-button" type="submit" disabled={this.state.isLoading} onClick={this.handleSubmit} value={this.state.isLoading ? "Submitting...": "Sign-In"} />
                             </div>
                             <br />
                             <div style={{ display: "flex", flexDirection: "row" }}>
@@ -104,7 +104,39 @@ class Landing extends React.PureComponent {
         this.setState(currentState);
     }
 
-    handleSubmit = (e) => {
+    handleSubmit = async () => {
+        this.setState({ isLoading: true });
+        const trxobj = {
+            title: this.state.title,
+            description: this.state.description,
+            price: this.state.price,
+            category: this.state.category,
+            condition: this.state.condition,
+        };
+        try {
+           /* const response = await fetch(API_ROOT + '/api/auth',
+                {
+                    method: "POST",
+                    headers: {},
+                    body: JSON.stringify(trxobj)
+                }
+            );*/
+            if(true)//response.status == 200)
+            {
+               // const data = await response.json();
+                alert("post is stored successfully");
+                this.setState({isLoading:false});
+            }
+            else
+            {
+                throw("api call failed");
+            }
+        }
+        catch (error) {
+            alert("failed api call");
+            this.setState({isLoading:false});
+
+        }
         //const navigate = useNavigate();
         //alert(JSON.stringify(this.state));
         //navigate('/home');

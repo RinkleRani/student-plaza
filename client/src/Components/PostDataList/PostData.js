@@ -28,7 +28,7 @@ class PostData extends React.Component {
             if (fetchResult.status === 200) {
                 const data = await fetchResult.json();
                 console.log("loading is done ", data);
-                this.setState({ isDataFetching: false, data: ALL_POSTS.result });
+                this.setState({ isDataFetching: false, data:ALL_POSTS.result });
             }
             else { throw ("api returned error") }
         }

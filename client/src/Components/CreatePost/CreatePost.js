@@ -64,14 +64,14 @@ class CreatePost extends React.PureComponent {
             condition: this.state.condition,
         };
         try {
-            const response = await fetch(API_ROOT + '/api/add',
+            const response = await fetch(API_ROOT + '/api/v0/post/',
                 {
                     method: "POST",
                     headers: {},
                     body: JSON.stringify(trxobj)
                 }
             );
-            if(true)//response.status == 200)
+            if(response.status == 201)
             {
                 const data = await response.json();
                 alert("post is stored successfully");
