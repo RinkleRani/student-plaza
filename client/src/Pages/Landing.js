@@ -6,16 +6,15 @@ import './../App.css';
 import './Landing.css';
 import SignUp from './SignUp.js';
 import { API_ROOT } from '../constants';
-
 class Landing extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
+            userId:"",
             user: "",
             password: "",
             showSignUpPost: false,
             isLoading: false
-
         };
     }
     renderDialogs = () => {
@@ -67,6 +66,7 @@ class Landing extends React.PureComponent {
                                 <input type="password" id="styletext" name="password" className="datainput" value={this.state.password} onChange={this.handleInputChange} placeholder="Enter password" />
                             </label>
 
+                            
                             <br />
                             <br />
                             <br />
@@ -74,6 +74,10 @@ class Landing extends React.PureComponent {
                             <div>
                                 <input className="style-button" type="submit" disabled={this.state.isLoading} onClick={this.handleSubmit} value={this.state.isLoading ? "Submitting...": "Sign-In"} />
                             </div>
+                            <br/>
+
+                            <p>{this.state.loginStatus}</p>
+
                             <br />
                             <div style={{ display: "flex", flexDirection: "row" }}>
                                 <div className="styleques">Don't have an Account? </div>
@@ -106,13 +110,13 @@ class Landing extends React.PureComponent {
 
     handleSubmit = async () => {
         this.setState({ isLoading: true });
-        const trxobj = {
+        /*const trxobj = {
             title: this.state.title,
             description: this.state.description,
             price: this.state.price,
             category: this.state.category,
             condition: this.state.condition,
-        };
+        };*/
         try {
            /* const response = await fetch(API_ROOT + '/api/auth',
                 {
@@ -140,7 +144,29 @@ class Landing extends React.PureComponent {
         //const navigate = useNavigate();
         //alert(JSON.stringify(this.state));
         //navigate('/home');
-        window.location.href='/home';
+        //this.state.user
+        //this.state.password
+
+        //Need to remove the below navigation once DB set up is complete
+      // way to share data to creatpost API call in Home component.
+        //window.localStorage.setItem('userID','111');
+       // window.location.href='/home';
+
+        Axios.post("http://localhost:3001/login",{emailInp:this.state.user,passwordInp:this.state.password
+    }).then((response)=>{
+        if(response.data.message){
+            console.log(response.data);
+            this.setState({loginStatus:response.data.message })
+            //this.state.loginStatus = response.data.message;
+        }
+        else{
+            console.log(response.data);
+            this.setState({loginStatus: response.data[0].name});
+            window.location.href='/home';
+        }
+    });
+
+      
     }
 }
 export default Landing

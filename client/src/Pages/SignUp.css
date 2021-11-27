@@ -2,7 +2,7 @@
 .form-box-signup{
     box-sizing: border-box;
     width: 30%;
-    height: 72vh;
+    height: 50vh;
     /*border: dotted #F55A00 5vw;*/
     border:solid 1px black;
     margin-top: 5vw;
@@ -15,13 +15,12 @@
     /* position:relative for .prevBtn and .nextBtn position:absolute; */
 }
 .data-input {
-  padding:10px;
-  border:0;
-  box-shadow:0 0 15px 4px rgba(0,0,0,0.06);
+  padding-left: 40px;
+  border:0px;
+  border-radius: 20px;
   border-color: blue;
-  border-radius:10px;
-  width:60%;
-
+  width: 100%;
+  height:100%
 }
 .style-button{
     padding:10px;
@@ -30,7 +29,7 @@
     color:#fff;
     font-weight:600;
     border-radius:5px;
-    width: 60%;
+    width: 40%;
 }
 .signid
 {
@@ -38,15 +37,25 @@
 }
 .icon-style {
     position: absolute;
-    margin-top: 1vw;
     margin-left: 1vw;
-    margin-bottom:3vw
+    font-size: large
+ 
  }
  .backstyle
  {
      background-color: rgb(248, 244, 239);
      background-position: center;
      background-repeat: no-repeat;
+     height: 60%;
+ }
+ .container
+ {
+    box-shadow:0 0 15px 4px rgba(0,0,0,0.06);
+    border:0px;
+    margin-left: 10em;
+    width:50%;
+    border-radius:20px;
+
  }
 
  

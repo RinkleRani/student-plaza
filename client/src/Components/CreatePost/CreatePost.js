@@ -57,6 +57,7 @@ class CreatePost extends React.PureComponent {
     handleSubmit = async () => {
         this.setState({ isLoading: true });
         const trxobj = {
+           // userId : "123rt57hhfcb7455",
             title: this.state.title,
             description: this.state.description,
             price: this.state.price,
@@ -71,7 +72,7 @@ class CreatePost extends React.PureComponent {
                     body: JSON.stringify(trxobj)
                 }
             );
-            if(response.status == 201)
+            if(response.status === 201)
             {
                 const data = await response.json();
                 alert("post is stored successfully");

@@ -5,9 +5,11 @@ import './Home.css';
 import HVInput from '../Components/HVInput/HVInput'
 import CreatePost from '../Components/CreatePost/CreatePost';
 import PostData from '../Components/PostDataList/PostData';
+import Landing from './Landing';
 
 class Home extends React.PureComponent {
     postData = React.createRef();
+    //landingref = React.createRef();
     constructor(props) {
         super(props);
         this.state = {
@@ -18,7 +20,7 @@ class Home extends React.PureComponent {
 
     }
     showALert =() => {
-        alert("alert is shown");
+
     }
     renderDialogs = () => {
         console.log("redner dialog called", this.state);
@@ -63,7 +65,6 @@ class Home extends React.PureComponent {
                         <PostData ref={this.postData} searchKey={this.state.searchkeyInInput} />
                     </div>
 
-
                     <div onClick={this.showCreatePost} style={{ position: "absolute", bottom: "15px", right: "15px", zIndex: "100", backgroundColor: "blue", width: "50px", height: "50px", borderRadius: "50px", fontSize: "3rem", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}>
                         +
                     </div>
@@ -93,9 +94,8 @@ class Home extends React.PureComponent {
         if (this.postData.current) {
             this.postData.current.fetchData();
         }
-        //const navigate = useNavigate();
-       // alert(JSON.stringify(this.state));
-        //navigate('/home');
+        let userid = window.localStorage.getItem('userID');
+        alert(userid);
     }
 }
 
