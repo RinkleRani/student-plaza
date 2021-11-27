@@ -16,6 +16,8 @@ class Home extends React.PureComponent {
         this.state = {
             searchkeyInInput:"",
             showCreatePost: false,
+            loggedInUser:"",
+            loggedInUserId:""
         }
 
 
@@ -33,7 +35,7 @@ class Home extends React.PureComponent {
                         <div className="modal">
                             <div className="modal-content">
                                 <CreatePost fn1={this.hideCreatePost}/>
-                                
+
                             </div>
                         </div>
                         :
@@ -91,19 +93,21 @@ class Home extends React.PureComponent {
         currentState[e.target.name] = e.target.value;
         this.setState(currentState);
     }
+
+
     handleSubmit = () => {
         if (this.postData.current) {
             this.postData.current.fetchData();
         }
         let userid = window.localStorage.getItem('userID');
         alert(userid);
-        
-        Axios.get("https://search-es-post-qypyn2r3s3iwgpz27h4ii7rlly.us-west-2.es.amazonaws.com/_search/?pretty=true&q="+this.state.searchkeyInInput)
-        .then((response)=>{
-            console.log("testinggg");
-            console.log(response.data.hits.hits[0]._source);
-            console.log(response)
-            
+
+        // Axios.get("https://search-es-post-qypyn2r3s3iwgpz27h4ii7rlly.us-west-2.es.amazonaws.com/_search/?pretty=true&q="+this.state.searchkeyInInput)
+        // .then((response)=>{
+        //     console.log("testinggg");
+        //     console.log(response.data.hits.hits[0]._source);
+        //     console.log(response)
+
 
         })
 

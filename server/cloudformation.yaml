@@ -247,3 +247,13 @@ Resources:
         - !Ref StudentPlazaPublicSubnet01
         - !Ref StudentPlazaPublicSubnet02
     DependsOn: [StudentPlazaEKSCluster, StudentPlazaNodeInstanceRole]
+  MyDB:
+    Type: 'AWS::RDS::DBInstance'
+    Properties:
+      DBName: LoginDB
+      AllocatedStorage: '5'
+      DBInstanceClass: db.t2.small
+      Engine: MySQL
+      MasterUsername: root
+      MasterUserPassword: password
+    DeletionPolicy: Snapshot
