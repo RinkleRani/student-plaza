@@ -19,6 +19,7 @@ class PostData extends React.Component {
     }
 
     fetchData = async (searchKey) => {
+        alert(searchKey);
         this.setState({ isDataFetching: true, data: [] });
 
         try {
@@ -58,7 +59,7 @@ class PostData extends React.Component {
         return (
             <div>
                 {
-                    this.state.data.hits.hits.map(this.renderPost)
+                    //this.state.data.hits.hits.map(this.renderPost)
                 }
             </div>
         )
