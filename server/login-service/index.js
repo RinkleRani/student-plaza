@@ -7,12 +7,13 @@ const session = require('express-session');
 
 const mysql = require("mysql");
 const { response } = require('express');
+require('custom-env').env('staging');
 
 
 const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "password",
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
     database: "LoginDB"
 
 })
