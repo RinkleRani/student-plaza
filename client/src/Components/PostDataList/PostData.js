@@ -43,6 +43,7 @@ class PostData extends React.Component {
             this.setState({ isDataFetching: false });
         }
     }
+
     render() {
         return (
             <div style={{ marginLeft: "3rem", marginTop: "2rem" }}>
@@ -77,19 +78,19 @@ class PostData extends React.Component {
                     <div className="withIcon">
                         <FaAngellist />
                         <div className="tag">
-                            {post.condition}
+                            {post._source.condition.S}
                         </div>
                     </div>
                     <div className="withIcon">
                         <FaDollarSign />
                         <div className="tag">
-                            {post._source.price.S}
+                            {post._source.price.N}
                         </div>
                     </div>
                     <div className="withIcon">
                         <FaTags />
                         <div className="tag">
-                            {post.category}
+                            {post._source.category.S}
                         </div>
                     </div>
                 </div>

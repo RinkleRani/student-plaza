@@ -2,6 +2,13 @@ AWSTemplateFormatVersion: 2010-09-09
 Metadata:
   License: Apache 2.0
 Description: 'CloudFormation template for Student Plaza project stack'
+Parameters:
+  RdsUserName:
+    Type: String
+    Description: Username for the Rds User TableName
+  RdsPassword:
+    Type: String
+    Description: Password for the Rds User TableName
 Resources:
   PostDynamoDBTable:
     Type: "AWS::DynamoDB::Table"
@@ -247,3 +254,16 @@ Resources:
         - !Ref StudentPlazaPublicSubnet01
         - !Ref StudentPlazaPublicSubnet02
     DependsOn: [StudentPlazaEKSCluster, StudentPlazaNodeInstanceRole]
+  StudentPlazaUserDb:
+    Type: 'AWS::RDS::DBInstance'
+    Properties:
+      DBName: StudentPlazaUserDb
+      AllocatedStorage: '5'
+      DBInstanceClass: db.t2.small
+      PubliclyAccessible: True
+      Engine: MySQL
+      MasterUsername: 
+        Ref: RdsUserName
+      MasterUserPassword: 
+        Ref: RdsPassword
+    DeletionPolicy: Snapshot

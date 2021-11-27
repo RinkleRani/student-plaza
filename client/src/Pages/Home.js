@@ -16,6 +16,8 @@ class Home extends React.PureComponent {
         this.state = {
             searchkeyInInput:"*",
             showCreatePost: false,
+            loggedInUser:"",
+            loggedInUserId:""
         }
 
 
@@ -34,7 +36,7 @@ class Home extends React.PureComponent {
                         <div className="modal">
                             <div className="modal-content">
                                 <CreatePost fn1={this.hideCreatePost}/>
-                                
+
                             </div>
                         </div>
                         :
@@ -93,6 +95,8 @@ class Home extends React.PureComponent {
         currentState[e.target.name] = e.target.value;
         this.setState(currentState);
     }
+
+
     handleSubmit = () => {
         if (this.postData.current) {
             this.postData.current.fetchData(this.state.searchkeyInInput);

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useEffect } from "react";
 import Popup from 'reactjs-popup';
 import { FaUser, FaEnvelope, FaKey } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
@@ -6,9 +7,11 @@ import './../App.css';
 import './Landing.css';
 import SignUp from './SignUp.js';
 import { API_ROOT } from '../constants';
+import Axios from 'axios';
 class Landing extends React.PureComponent {
     constructor(props) {
         super(props);
+        Axios.defaults.withCredentials = true;
         this.state = {
             userId:"",
             user: "",
@@ -17,6 +20,23 @@ class Landing extends React.PureComponent {
             isLoading: false
         };
     }
+
+    componentDidMount(){
+         Axios.get("http://localhost:3001/login").then((response)=>{
+             //this.setState({loginStatus: response.data.user[0].name})
+             console.log(response);
+         });
+    }
+
+    componentDidUpdate(){
+        Axios.get("http://localhost:3001/login").then((response)=>{
+             //this.setState({loginStatus: response.data.user[0].name});
+             console.log(response);
+         });
+
+    }
+
+
     renderDialogs = () => {
         console.log("redner dialog called", this.state);
         return (
@@ -66,7 +86,7 @@ class Landing extends React.PureComponent {
                                 <input type="password" id="styletext" name="password" className="datainput" value={this.state.password} onChange={this.handleInputChange} placeholder="Enter password" />
                             </label>
 
-                            
+
                             <br />
                             <br />
                             <br />
@@ -108,8 +128,8 @@ class Landing extends React.PureComponent {
         this.setState(currentState);
     }
 
-    handleSubmit = async () => {
-        this.setState({ isLoading: true });
+    handleSubmit = () => {
+        // this.setState({ isLoading: true });
         /*const trxobj = {
             title: this.state.title,
             description: this.state.description,
@@ -117,30 +137,30 @@ class Landing extends React.PureComponent {
             category: this.state.category,
             condition: this.state.condition,
         };*/
-        try {
-           /* const response = await fetch(API_ROOT + '/api/auth',
-                {
-                    method: "POST",
-                    headers: {},
-                    body: JSON.stringify(trxobj)
-                }
-            );*/
-            if(true)//response.status == 200)
-            {
-               // const data = await response.json();
-                alert("post is stored successfully");
-                this.setState({isLoading:false});
-            }
-            else
-            {
-                throw("api call failed");
-            }
-        }
-        catch (error) {
-            alert("failed api call");
-            this.setState({isLoading:false});
+        // try {
+        //    /* const response = await fetch(API_ROOT + '/api/auth',
+        //         {
+        //             method: "POST",
+        //             headers: {},
+        //             body: JSON.stringify(trxobj)
+        //         }
+        //     );*/
+        //     if(true)//response.status == 200)
+        //     {
+        //        const data = await response.json();
+        //         // alert("post is stored successfully");
+        //         this.setState({isLoading:false});
+        //     }
+        //     else
+        //     {
+        //         throw("api call failed");
+        //     }
+        // }
+        // catch (error) {
+        //     alert("failed api call");
+        //     this.setState({isLoading:false});
 
-        }
+        // }
         //const navigate = useNavigate();
         //alert(JSON.stringify(this.state));
         //navigate('/home');
@@ -150,7 +170,6 @@ class Landing extends React.PureComponent {
         //Need to remove the below navigation once DB set up is complete
       // way to share data to creatpost API call in Home component.
         //window.localStorage.setItem('userID','111');
-       // window.location.href='/home';
        window.location.href='/home';
 
         Axios.post("http://localhost:3001/login",{emailInp:this.state.user,passwordInp:this.state.password
@@ -162,12 +181,18 @@ class Landing extends React.PureComponent {
         else{
             console.log(response.data);
             this.setState({loginStatus: response.data[0].name});
+            alert(JSON.stringify("Welcome "+this.state.loginStatus));
           //  Axios.get("http://localhost:3001/userlogin",{emailInp:this.state.user,passwordInp:this.state.password}).then((response)=>{console.log(response)});
             window.location.href='/home';
         }
     });
 
-      
+
     }
+
+
+
+
+
 }
 export default Landing
