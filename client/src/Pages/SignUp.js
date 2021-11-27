@@ -4,7 +4,7 @@ import { FaPhoneAlt, FaUser} from 'react-icons/fa';
 import { FaEnvelope } from 'react-icons/fa';
 import { FaKey } from 'react-icons/fa';
 import './SignUp.css';
-//import Axios from "axios";
+import Axios from "axios";
 
 
 class SignUp extends React.PureComponent {

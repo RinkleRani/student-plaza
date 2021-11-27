@@ -109,7 +109,7 @@ class Home extends React.PureComponent {
         //     console.log(response)
 
 
-        })
+        // })
 
     }
 }

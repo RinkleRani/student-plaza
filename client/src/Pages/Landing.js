@@ -7,6 +7,7 @@ import './../App.css';
 import './Landing.css';
 import SignUp from './SignUp.js';
 import { API_ROOT } from '../constants';
+import Axios from 'axios';
 class Landing extends React.PureComponent {
     constructor(props) {
         super(props);
@@ -127,8 +128,8 @@ class Landing extends React.PureComponent {
         this.setState(currentState);
     }
 
-    handleSubmit = async () => {
-        this.setState({ isLoading: true });
+    handleSubmit = () => {
+        // this.setState({ isLoading: true });
         /*const trxobj = {
             title: this.state.title,
             description: this.state.description,
@@ -136,30 +137,30 @@ class Landing extends React.PureComponent {
             category: this.state.category,
             condition: this.state.condition,
         };*/
-        try {
-           /* const response = await fetch(API_ROOT + '/api/auth',
-                {
-                    method: "POST",
-                    headers: {},
-                    body: JSON.stringify(trxobj)
-                }
-            );*/
-            if(true)//response.status == 200)
-            {
-               // const data = await response.json();
-                alert("post is stored successfully");
-                this.setState({isLoading:false});
-            }
-            else
-            {
-                throw("api call failed");
-            }
-        }
-        catch (error) {
-            alert("failed api call");
-            this.setState({isLoading:false});
+        // try {
+        //    /* const response = await fetch(API_ROOT + '/api/auth',
+        //         {
+        //             method: "POST",
+        //             headers: {},
+        //             body: JSON.stringify(trxobj)
+        //         }
+        //     );*/
+        //     if(true)//response.status == 200)
+        //     {
+        //        const data = await response.json();
+        //         // alert("post is stored successfully");
+        //         this.setState({isLoading:false});
+        //     }
+        //     else
+        //     {
+        //         throw("api call failed");
+        //     }
+        // }
+        // catch (error) {
+        //     alert("failed api call");
+        //     this.setState({isLoading:false});
 
-        }
+        // }
         //const navigate = useNavigate();
         //alert(JSON.stringify(this.state));
         //navigate('/home');
@@ -170,7 +171,6 @@ class Landing extends React.PureComponent {
       // way to share data to creatpost API call in Home component.
         //window.localStorage.setItem('userID','111');
        // window.location.href='/home';
-       window.location.href='/home';
 
         Axios.post("http://localhost:3001/login",{emailInp:this.state.user,passwordInp:this.state.password
     }).then((response)=>{
