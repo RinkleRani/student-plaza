@@ -170,7 +170,7 @@ class Landing extends React.PureComponent {
         //Need to remove the below navigation once DB set up is complete
       // way to share data to creatpost API call in Home component.
         //window.localStorage.setItem('userID','111');
-    //    window.location.href='/home';
+       window.location.href='/home';
 
         Axios.post("http://localhost:3001/login",{emailInp:this.state.user,passwordInp:this.state.password
     }).then((response)=>{
