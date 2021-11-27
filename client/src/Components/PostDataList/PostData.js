@@ -31,6 +31,7 @@ class PostData extends React.Component {
             );
             if (fetchResult.status === 200) {
                 const data = await fetchResult.json();
+                console.log("search key is" , searchKey);
                 console.log("loading is done ", data);
                 this.setState({ isDataFetching: false, data: data });
             }

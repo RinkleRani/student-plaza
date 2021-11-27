@@ -5,6 +5,7 @@ import './Home.css';
 import HVInput from '../Components/HVInput/HVInput'
 import CreatePost from '../Components/CreatePost/CreatePost';
 import PostData from '../Components/PostDataList/PostData';
+import Axios from "axios";
 
 class Home extends React.PureComponent {
     postData = React.createRef();
@@ -90,12 +91,25 @@ class Home extends React.PureComponent {
         this.setState(currentState);
     }
     handleSubmit = () => {
-        if (this.postData.current) {
-            this.postData.current.fetchData();
-        }
+        // if (this.postData.current) {
+        //     this.postData.current.fetchData();
+        // }
+
         //const navigate = useNavigate();
        // alert(JSON.stringify(this.state));
         //navigate('/home');
+        
+        Axios.get("https://search-es-post-qypyn2r3s3iwgpz27h4ii7rlly.us-west-2.es.amazonaws.com/_search/?pretty=true&q="+this.state.searchkeyInInput)
+        .then((response)=>{
+            console.log("testinggg");
+            console.log(response.data.hits.hits[0]._source);
+            console.log(response)
+            
+
+        })
+
+
+
     }
 }
 
