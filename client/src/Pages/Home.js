@@ -65,11 +65,7 @@ class Home extends React.PureComponent {
                     </div>
 
                     <div>
-<<<<<<< Updated upstream
-                        <PostData ref={this.postData} searchKey={this.state.searchkeyInInput} />
-=======
                         <PostData ref={this.postData} searchkeyInInput={this.state.searchkeyInInput} />
->>>>>>> Stashed changes
                     </div>
 
                     <div onClick={this.showCreatePost} style={{ position: "absolute", bottom: "15px", right: "15px", zIndex: "100", backgroundColor: "blue", width: "50px", height: "50px", borderRadius: "50px", fontSize: "3rem", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}>
