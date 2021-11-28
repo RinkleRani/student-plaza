@@ -50,7 +50,9 @@ app.post('/register',(req,res)=>{
     const fullName = req.body.fullNameInp;
     const phone = req.body.contactInp;
 
-    const sqlInsert = "INSERT INTO `LoginDB`.`users` (`email`, `password`, `name`, `contact`) VALUES (?,?,?,?);"
+
+    
+    const sqlInsert = "INSERT INTO `StudentPlazaUserDb`.`users` (`email`, `password`, `name`, `contact`) VALUES (?,?,?,?);"
     db.query(sqlInsert,[email,password,fullName,phone],(err,result)=>{
         console.log(result);
 
@@ -62,7 +64,7 @@ app.post('/login',(req,res)=>{
 
     const email = req.body.emailInp ;
     const password = req.body.passwordInp ;
-    const sqlInsert = "SELECT * FROM `LoginDB`.`users` WHERE email = ? AND password = ?;"
+    const sqlInsert = "SELECT * FROM `StudentPlazaUserDb`.`users` WHERE email = ? AND password = ?;"
     db.query(sqlInsert,[email,password],(err,result)=>{
         if(err) {res.send({err: err})}
         if(result.length>0){
