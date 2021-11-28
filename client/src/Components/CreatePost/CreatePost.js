@@ -6,6 +6,7 @@ class CreatePost extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
+            userId:"",
             title: "",
             price: "",
             category: "",
@@ -57,7 +58,7 @@ class CreatePost extends React.PureComponent {
     handleSubmit = async () => {
         this.setState({ isLoading: true });
         const trxobj = {
-           // userId : "123rt57hhfcb7455",
+            userId : window.localStorage.getItem('userId'),
             title: this.state.title,
             description: this.state.description,
             price: this.state.price,

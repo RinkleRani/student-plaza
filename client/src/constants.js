@@ -1,1 +1,1 @@
-export const API_ROOT = "http://0.0.0.0:3000";
+export const API_ROOT = "http://a64f2e3e4a3fe47d49b0877d457098bf-922598223.us-west-2.elb.amazonaws.com:8080";
