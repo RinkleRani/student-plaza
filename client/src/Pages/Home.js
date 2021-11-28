@@ -14,7 +14,7 @@ class Home extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            searchkeyInInput:"",
+            searchkeyInInput:"*",
             showCreatePost: false,
             loggedInUser:"",
             loggedInUserId:""
@@ -27,6 +27,7 @@ class Home extends React.PureComponent {
     }
     renderDialogs = () => {
         console.log("redner dialog called", this.state);
+        console.log(this.state.searchkeyInInput);
         return (
             <div>
                 {
@@ -65,7 +66,8 @@ class Home extends React.PureComponent {
                     </div>
 
                     <div>
-                        <PostData ref={this.postData} searchkeyInInput={this.state.searchkeyInInput} />
+                        <PostData ref={this.postData} searchKey={this.state.searchkeyInInput} />
+                        
                     </div>
 
                     <div onClick={this.showCreatePost} style={{ position: "absolute", bottom: "15px", right: "15px", zIndex: "100", backgroundColor: "blue", width: "50px", height: "50px", borderRadius: "50px", fontSize: "3rem", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}>
@@ -85,7 +87,7 @@ class Home extends React.PureComponent {
     hideCreatePost = () => {
         this.setState({ showCreatePost: false });
         if (this.postData.current) {
-            this.postData.current.fetchData();
+            this.postData.current.fetchData("*");
         }
     }
     handleInputChange = (e) => {
@@ -97,19 +99,19 @@ class Home extends React.PureComponent {
 
     handleSubmit = () => {
         if (this.postData.current) {
-            this.postData.current.fetchData();
+            this.postData.current.fetchData(this.state.searchkeyInInput);
         }
         let userid = window.localStorage.getItem('userID');
-        alert(userid);
+       // alert(userid);
+        
+      /*  Axios.get("https://search-es-post-qypyn2r3s3iwgpz27h4ii7rlly.us-west-2.es.amazonaws.com/_search/?pretty=true&q="+this.state.searchkeyInInput)
+        .then((response)=>{
+            console.log("testinggg");
+            console.log(response.data.hits.hits[0]._source);
+            console.log(response)
+            
 
-        // Axios.get("https://search-es-post-qypyn2r3s3iwgpz27h4ii7rlly.us-west-2.es.amazonaws.com/_search/?pretty=true&q="+this.state.searchkeyInInput)
-        // .then((response)=>{
-        //     console.log("testinggg");
-        //     console.log(response.data.hits.hits[0]._source);
-        //     console.log(response)
-
-
-        // })
+        })*/
 
     }
 }

@@ -15,14 +15,17 @@ class PostData extends React.Component {
     }
 
     async componentDidMount() {
-        await this.fetchData(this.props.searchkeyInInput);
+        await this.fetchData(this.props.searchKey);
     }
-    fetchData = async (searchkeyInInput) => {
-         this.setState({ isDataFetching: true, data: [] });
+
+    fetchData = async (searchKey) => {
+        // alert(searchKey);
+        this.setState({ isDataFetching: true, data: [] });
 
         try {
+          if(searchKey == "") searchKey = "*";
             const fetchResult = await fetch(
-                "https://search-es-post-qypyn2r3s3iwgpz27h4ii7rlly.us-west-2.es.amazonaws.com/_search/?pretty=true&q=" + searchkeyInInput,
+                "https://search-es-post-qypyn2r3s3iwgpz27h4ii7rlly.us-west-2.es.amazonaws.com/_search/?pretty=true&q=" + searchKey,
                 {
                     method: "GET",
                     headers: {}
@@ -30,7 +33,7 @@ class PostData extends React.Component {
             );
             if (fetchResult.status === 200) {
                 const data = await fetchResult.json();
-                console.log("search key is" , searchkeyInInput);
+                console.log("search key is" , searchKey);
                 console.log("loading is done ", data);
                 this.setState({ isDataFetching: false, data: data });
             }
