@@ -4,4 +4,8 @@ services:
     build:
       context: ./post-service
     image: post-service
+  login-service:
+    build:
+      context: ./login-service
+    image: login-service
   

@@ -182,7 +182,7 @@ class Landing extends React.PureComponent {
             console.log(response.data);
             this.setState({loginStatus: response.data[0].name});
             alert(JSON.stringify("Welcome "+this.state.loginStatus));
-          //  Axios.get("http://localhost:3001/userlogin",{emailInp:this.state.user,passwordInp:this.state.password}).then((response)=>{console.log(response)});
+           Axios.get("http://localhost:3001/userlogin",{emailInp:this.state.user,passwordInp:this.state.password}).then((response)=>{console.log(response)});
             window.location.href='/home';
         }
     });
