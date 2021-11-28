@@ -6,6 +6,6 @@ data:
   TABLE_NAME: PostDynamoDBTable
   RDS_DATABASE_NAME: StudentPlazaUserDb
   RDS_HOSTURL: ss1hj8fvlo9qql2.c4fs73dxqxdp.us-west-2.rds.amazonaws.com
-  RDS_PORT: 3306
+  RDS_PORT: "3306"
 metadata:
   name: env-config

@@ -1,4 +1,4 @@
-import mysql from "mysql"
+import mysql from "mysql2"
 import { config } from "../../../config"
 import { Logger } from "tslog"
 import util from 'util'
@@ -31,8 +31,7 @@ class RdsHelper {
             "LIMIT 1";
         
         this.logger.info('Query string is'+ query_str);
-        const query = util.promisify(this.connection.query).bind(this.connection);
-        const rows : any = await query(query_str)
+        const rows: any = await this.connection.promise().query(query_str)
 
         if (rows.length > 0) {
             this.logger.info("User exists")

@@ -7,7 +7,7 @@ import { Logger } from "tslog";
 import { AWSError } from 'aws-sdk';
 
 const postRouter: Router = Router();
-var log = new Logger();
+var logger = new Logger();
 
 // get the posts 
 postRouter.get('/', async (req: Request, res: Response) => {
@@ -19,37 +19,37 @@ postRouter.get('/', async (req: Request, res: Response) => {
 
     if (checkuser == true){
         if (postId == null && userId == null) {
-            log.info("Routing to get all the posts")
+            logger.info("Routing to get all the posts")
             const posts = dbhelper.getAllPosts();
             posts.then((function (data) {
                 if (data) {
-                    log.info('Successfully got the posts');
+                    logger.info('Successfully got the posts');
                     res.send(data.Items)
                 } else {
-                    log.info('Unable to create the post')
+                    logger.info('Unable to create the post')
                     res.send({})
                 }
             })).catch(function (err: AWSError) {
-                res.sendStatus(err.statusCode)
-                res.write(err.message)
+                logger.error(err.message)
+                res.sendStatus(500)   
             });
             
         }
         else if (postId != null && userId == null) {
             if (typeof postId === 'string') {
-                log.info("Routing to get all the linked to userId")
+                logger.info("Routing to get all the linked to userId")
                 const post = dbhelper.getPost(postId);
                 post.then((function (data) {
                     if (data) {
-                        log.info('Successfully got the post');
+                        logger.info('Successfully got the post');
                         res.send(data.Items)
                     } else {
-                        log.info('Unable to create the post')
+                        logger.info('Unable to create the post')
                         res.send({})
                     }
                 })).catch(function (err: AWSError) {
-                    res.sendStatus(err.statusCode)
-                    res.write(err.message)
+                    logger.error(err.message)
+                    res.sendStatus(500)  
                 });
             }
             else {
@@ -58,19 +58,19 @@ postRouter.get('/', async (req: Request, res: Response) => {
         }
         else if (userId != null && postId == null) {
             if (typeof userId === 'string') {
-                log.info("Routing to get the post based on postId")
+                logger.info("Routing to get the post based on postId")
                 const post = dbhelper.getPostFromAccount(userId);
                 post.then((function (data) {
                     if (data) {
-                        log.info('Successfully got the post');
+                        logger.info('Successfully got the post');
                         res.send(data.Items)
                     } else {
-                        log.info('Unable to create the post')
+                        logger.info('Unable to create the post')
                         res.send({})
                     }
                 })).catch(function (err: AWSError) {
-                    res.sendStatus(err.statusCode)
-                    res.write(err.message)
+                    logger.error(err.message)
+                    res.sendStatus(500)  
                 });
             }
             else {
@@ -78,7 +78,7 @@ postRouter.get('/', async (req: Request, res: Response) => {
             }
         }
     } else{
-        log.info('User does not exists');
+        logger.info('User does not exists');
         res.sendStatus(401)
     }
 });
@@ -102,18 +102,18 @@ postRouter.post('/',
             const createdPost = dbhelper.write(post)
             createdPost.then((function (data) {
                 if (data) {
-                    log.info('Successfully creates the post');
+                    logger.info('Successfully creates the post');
                     res.sendStatus(201)
                 } else {
-                    log.info('Unable to create the post')
+                    logger.info('Unable to create the post')
                     res.sendStatus(400)
                 }
             })).catch(function (err: AWSError) {
-                res.sendStatus(err.statusCode)
-                res.write(err.message)
+                logger.error(err.message)
+                res.sendStatus(500)  
             });
         } else{
-            log.info('User does not exists');
+            logger.info('User does not exists');
             res.sendStatus(401)
         }
     });
@@ -137,18 +137,18 @@ postRouter.put('/', async (req: Request, res: Response) => {
     const createdPost = dbhelper.update(post);
     createdPost.then(function (data) {
         if (!data.Attributes) {
-            log.info('Unable to update the post')
+            logger.info('Unable to update the post')
             res.sendStatus(404)
         } else {
-            log.info('Successfully updated the post');
+            logger.info('Successfully updated the post');
             res.sendStatus(200)
         }
     }).catch(function (err: AWSError) {
-        res.sendStatus(err.statusCode)
-        res.write(err.message)
+        logger.error(err.message)
+        res.sendStatus(500)  
     });
     } else{
-        log.info('User does not exists');
+        logger.info('User does not exists');
         res.sendStatus(401)
     }
 });
@@ -160,25 +160,25 @@ postRouter.delete('/', async (req: Request, res: Response) => {
     const checkuser = await rdsdbhelper.checkUser(userId)
     if (checkuser == true) {
         if (typeof postId === 'string') {
-            log.info("Routing to delete the post based on given postId")
+            logger.info("Routing to delete the post based on given postId")
             const result = dbhelper.delete(postId);
             result.then(function (data) {
                 if (!data.Attributes) {
-                    log.info('Unable to delete the post, not found')
+                    logger.info('Unable to delete the post, not found')
                     res.sendStatus(404)
                 } else {
-                    log.info('Successfully deleted the post with id: ' + postId);
+                    logger.info('Successfully deleted the post with id: ' + postId);
                     res.sendStatus(204)
                 }
             }).catch(function (err: AWSError) {
-                res.sendStatus(err.statusCode)
-                res.write(err.message)
+                logger.error(err.message)
+                res.sendStatus(500)  
             });
         } else {
             res.sendStatus(400)
         }
     } else {
-        log.info('User does not exists');
+        logger.info('User does not exists');
         res.sendStatus(401)
     }
 });
