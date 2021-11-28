@@ -51,6 +51,11 @@ spec:
             configMapKeyRef:
               name: env-config
               key: RDS_PORT
+        - name: RDS_DATABASE_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: env-config
+              key: RDS_DATABASE_NAME
         - name: RDS_USERNAME
           valueFrom:
             secretKeyRef:
