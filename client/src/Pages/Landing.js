@@ -60,14 +60,16 @@ class Landing extends React.PureComponent {
                                 <FaKey className="iconstyle" />
                                 <input type="password" id="styletext" name="password" className="datainput" value={this.state.password} onChange={this.handleInputChange} placeholder="Enter password" />
                             </label>
-
                             <br />
-                            <br />
-                            <br />
+                            <p className="loginstatus">{this.state.loginStatus}</p>
                             <br></br>
                             <div>
                                 <button className="style-button" type="submit" onClick={this.handleSubmit}>Sign-In</button>
                             </div>
+                            <br/>
+
+                            
+
                             <br />
                             <div style={{ display: "flex", flexDirection: "row" }}>
                                 <div className="styleques">Don't have an Account? </div>
@@ -118,9 +120,9 @@ class Landing extends React.PureComponent {
         }
         else{
             console.log(response.data);
-            this.setState({loginStatus: response.data[0].name});
+            this.setState({loginStatus: response.data[0].id});
             window.localStorage.setItem('userID',response.data[0].id);
-            alert(JSON.stringify("Welcome "+this.state.loginStatus));
+           // alert(JSON.stringify("Welcome "+this.state.loginStatus));
            Axios.get("http://localhost:3001/userlogin",{emailInp:this.state.user,passwordInp:this.state.password}).then((response)=>{console.log(response)});
             window.location.href='/home';
         }

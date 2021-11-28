@@ -53,6 +53,11 @@
     /* position:relative for .prevBtn and .nextBtn position:absolute; */
 }
 
+
+.loginstatus{
+    color: red;
+}
+
 @media only screen and (min-width: 800px) {
     .form-box{
 
