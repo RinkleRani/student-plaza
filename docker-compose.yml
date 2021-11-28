@@ -14,12 +14,5 @@ services:
     image: login-service
   frontend:
     build: 
-      context: ./frontend
+      context: ./client
     image: frontend
-    command: npm start
-    ports: 
-      - 5000:5000
-    working_dir: /app
-    volumes:
-      - './:/app'
-      - '/app/node_modules'

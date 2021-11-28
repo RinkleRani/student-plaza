@@ -17,9 +17,12 @@ script:
   - docker-compose -f docker-compose.yml build --parallel
   - docker tag post-service "${DOCKER_USERNAME}/post-service:v2"
   - docker tag login-service "${DOCKER_USERNAME}/login-service:v1"
+  - docker tag reverseproxy "${DOCKER_USERNAME}/reverseproxy:v1"
+  - docker tag frontend "${DOCKER_USERNAME}/frontend:v1"
 
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker push "${DOCKER_USERNAME}/reverseproxy:v1"
   - docker push "${DOCKER_USERNAME}/post-service:v2"
   - docker push "${DOCKER_USERNAME}/login-service:v1"
+  - docker push "${DOCKER_USERNAME}/frontend:v1"
