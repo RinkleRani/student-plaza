@@ -7,7 +7,7 @@ const session = require('express-session');
 
 const mysql = require("mysql");
 const { response } = require('express');
-require('custom-env').env('staging');
+require('custom-env').env();
 
 
 const db = mysql.createConnection({
