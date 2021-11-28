@@ -19,10 +19,11 @@ class PostData extends React.Component {
     }
 
     fetchData = async (searchKey) => {
-        alert(searchKey);
+        // alert(searchKey);
         this.setState({ isDataFetching: true, data: [] });
 
         try {
+          if(searchKey == "") searchKey = "*";
             const fetchResult = await fetch(
                 "https://search-es-post-qypyn2r3s3iwgpz27h4ii7rlly.us-west-2.es.amazonaws.com/_search/?pretty=true&q=" + searchKey,
                 {
