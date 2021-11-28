@@ -101,7 +101,8 @@ class Home extends React.PureComponent {
         if (this.postData.current) {
             this.postData.current.fetchData(this.state.searchkeyInInput);
         }
-        let userid = window.localStorage.getItem('userID');
+        
+        //let userid = window.localStorage.getItem('userID');
        // alert(userid);
         
       /*  Axios.get("https://search-es-post-qypyn2r3s3iwgpz27h4ii7rlly.us-west-2.es.amazonaws.com/_search/?pretty=true&q="+this.state.searchkeyInInput)
