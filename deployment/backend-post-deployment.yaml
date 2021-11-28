@@ -26,9 +26,47 @@ spec:
             memory: "1024Mi"
             cpu: "500m"
         env:
+        - name: AWS_REGION
+          valueFrom:
+            configMapKeyRef:
+              name: env-config
+              key: AWS_REGION
+        - name: AWS_PROFILE
+          valueFrom:
+            configMapKeyRef:
+              name: env-config
+              key: AWS_PROFILE
         - name: TABLE_NAME
           valueFrom:
             configMapKeyRef:
               name: env-config
               key: TABLE_NAME
+        - name: RDS_HOSTURL
+          valueFrom:
+            configMapKeyRef:
+              name: env-config
+              key: RDS_HOSTURL
+        - name: RDS_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: env-config
+              key: TABLE_NAME
+        - name: RDS_PORT
+          valueFrom:
+            secretKeyRef:
+              name: env-secret
+              key: RDS_USERNAME
+        - name: RDS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: env-secret
+              key: RDS_PASSWORD
+        volumeMounts:
+        - name: aws-secret
+          mountPath: "/root/.aws/"
+          readOnly: true
         restartPolicy: Always
+        volumes:
+        - name: aws-secret
+          secret:
+            secretName: aws-secret

@@ -6,6 +6,5 @@ export const config = {
     'rds_username': process.env.RDS_USERNAME,
     'rds_password': process.env.RDS_PASSWORD,
     'rds_port': process.env.RDS_PORT,
-    'rds_database_name': process.env.RDS_DATABASE_NAME,
-    'rds_table': process.env.RDS_TABLE
+    'rds_database_name': process.env.RDS_DATABASE_NAME
 }
