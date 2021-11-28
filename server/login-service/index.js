@@ -40,6 +40,10 @@ app.use(session({
 
 app.listen(3001, () => {
     console.log("Running on port 3001");
+    const sqlTable = "CREATE TABLE IF NOT EXISTS `StudentPlazaUserDb`.`users` (`id` INT NOT NULL AUTO_INCREMENT,`email` VARCHAR(45) NULL,`password` VARCHAR(45) NULL,`name` VARCHAR(45) NULL,`contact` VARCHAR(45) NULL,PRIMARY KEY (`id`));";
+    db.query(sqlTable,(err,result)=>{
+        console.log(result);
+    })
 })
 
 
