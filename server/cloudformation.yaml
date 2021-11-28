@@ -243,7 +243,7 @@ Resources:
       AmiType: AL2_x86_64
       InstanceTypes: 
         - m5.large
-      NodegroupName: StudentPlazaNodeGroup
+      NodegroupName: StudentPlazaNodeGroup-2
       RemoteAccess:
         Ec2SshKey: student-plaza-node-group-key
       ScalingConfig:

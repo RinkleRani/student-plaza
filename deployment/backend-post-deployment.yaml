@@ -2,21 +2,21 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    service: student-plaza-service
-  name: student-plaza
+    service: backend-post
+  name: backend-post
 spec:
   replicas: 1
   selector:
     matchLabels:
-      service: student-plaza-service
+      service: backend-post
   template:
     metadata:
       labels:
-        service: student-plaza-service
+        service: backend-post
     spec:
       containers:
       - image: rinklerani/post-service:v2
-        name: post-service
+        name: backend-post
         imagePullPolicy: Always
         resources:
           requests:

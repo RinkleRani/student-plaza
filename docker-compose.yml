@@ -1,5 +1,9 @@
 version: "3"
 services:
+  reverseproxy:
+    build:
+      context: ./server/reverseproxy
+    image: reverseproxy
   post-service:
     build:
       context: ./server/post-service
