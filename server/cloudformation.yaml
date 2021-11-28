@@ -242,13 +242,13 @@ Resources:
         "Fn::GetAtt": ["StudentPlazaNodeInstanceRole", "Arn"]
       AmiType: AL2_x86_64
       InstanceTypes: 
-        - t2.micro
+        - m5.large
       NodegroupName: StudentPlazaNodeGroup
       RemoteAccess:
         Ec2SshKey: student-plaza-node-group-key
       ScalingConfig:
         MinSize: 2
-        DesiredSize: 3
+        DesiredSize: 2
         MaxSize: 4
       Subnets:
         - !Ref StudentPlazaPublicSubnet01
