@@ -20,10 +20,10 @@ spec:
         imagePullPolicy: Always
         resources:
           requests:
-            memory: "64Mi"
+            memory: "1024Mi"
             cpu: "250m"
           limits:
-            memory: "1024Mi"
+            memory: "2048Mi"
             cpu: "500m"
         env:
         - name: AWS_REGION
@@ -50,8 +50,8 @@ spec:
           valueFrom:
             configMapKeyRef:
               name: env-config
-              key: TABLE_NAME
-        - name: RDS_PORT
+              key: RDS_PORT
+        - name: RDS_USERNAME
           valueFrom:
             secretKeyRef:
               name: env-secret
@@ -65,8 +65,8 @@ spec:
         - name: aws-secret
           mountPath: "/root/.aws/"
           readOnly: true
-        restartPolicy: Always
-        volumes:
+      restartPolicy: Always
+      volumes:
         - name: aws-secret
           secret:
             secretName: aws-secret
