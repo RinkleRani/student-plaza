@@ -1,4 +1,4 @@
-import DynamoDB from "aws-sdk/clients/DynamoDB";
+import AWS = require('aws-sdk');
 import { Post } from "../models/post";
 import { config } from "../../../config"
 import { documentClient } from "../../../aws"
@@ -8,15 +8,15 @@ import { AWSError } from "aws-sdk";
 
 class DynamoDbHelper {  
     log: Logger = new Logger();  
-    docClient: DynamoDB.DocumentClient;
+    docClient: AWS.DynamoDB.DocumentClient;
     tableName: string;
 
-    constructor(tableName: string, documentClient: DynamoDB.DocumentClient){
+    constructor(tableName: string, documentClient: AWS.DynamoDB.DocumentClient){
         this.tableName = tableName;
         this.docClient = documentClient;
     }
 
-    async write(post:Post): Promise<PromiseResult<DynamoDB.DocumentClient.PutItemOutput, AWSError>>{
+    async write(post:Post): Promise<PromiseResult<AWS.DynamoDB.DocumentClient.PutItemOutput, AWSError>>{
         this.log.info("Creating a new post")
         let result = await this.docClient.put({
             TableName: this.tableName,
@@ -90,7 +90,7 @@ class DynamoDbHelper {
         return result
     }
 
-    async delete(postId: string): Promise<PromiseResult<DynamoDB.DocumentClient.DeleteItemOutput, AWSError>> {
+    async delete(postId: string): Promise<PromiseResult<AWS.DynamoDB.DocumentClient.DeleteItemOutput, AWSError>> {
         this.log.info("Deleting post with id: " + postId)
         const result = await this.docClient.delete({
             TableName: this.tableName,

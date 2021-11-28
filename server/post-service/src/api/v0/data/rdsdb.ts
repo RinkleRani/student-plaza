@@ -1,9 +1,7 @@
 import mysql from "mysql"
 import { config } from "../../../config"
 import { Logger } from "tslog"
-import { bool } from "aws-sdk/clients/signer"
 import util from 'util'
-import { table } from "console";
 
 
 class RdsHelper {
