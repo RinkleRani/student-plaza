@@ -7,7 +7,7 @@ const session = require('express-session');
 
 const mysql = require("mysql");
 const { response } = require('express');
-require('custom-env').env('staging');
+require('custom-env').env();
 
 
 const db = mysql.createConnection({
@@ -40,6 +40,10 @@ app.use(session({
 
 app.listen(3001, () => {
     console.log("Running on port 3001");
+    const sqlTable = "CREATE TABLE IF NOT EXISTS `StudentPlazaUserDb`.`users` (`id` INT NOT NULL AUTO_INCREMENT,`email` VARCHAR(45) NULL,`password` VARCHAR(45) NULL,`name` VARCHAR(45) NULL,`contact` VARCHAR(45) NULL,PRIMARY KEY (`id`));";
+    db.query(sqlTable,(err,result)=>{
+        console.log(result);
+    })
 })
 
 
@@ -50,7 +54,9 @@ app.post('/register',(req,res)=>{
     const fullName = req.body.fullNameInp;
     const phone = req.body.contactInp;
 
-    const sqlInsert = "INSERT INTO `LoginDB`.`users` (`email`, `password`, `name`, `contact`) VALUES (?,?,?,?);"
+
+    
+    const sqlInsert = "INSERT INTO `StudentPlazaUserDb`.`users` (`email`, `password`, `name`, `contact`) VALUES (?,?,?,?);"
     db.query(sqlInsert,[email,password,fullName,phone],(err,result)=>{
         console.log(result);
 
@@ -62,7 +68,7 @@ app.post('/login',(req,res)=>{
 
     const email = req.body.emailInp ;
     const password = req.body.passwordInp ;
-    const sqlInsert = "SELECT * FROM `LoginDB`.`users` WHERE email = ? AND password = ?;"
+    const sqlInsert = "SELECT * FROM `StudentPlazaUserDb`.`users` WHERE email = ? AND password = ?;"
     db.query(sqlInsert,[email,password],(err,result)=>{
         if(err) {res.send({err: err})}
         if(result.length>0){
