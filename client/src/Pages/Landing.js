@@ -123,7 +123,7 @@ class Landing extends React.PureComponent {
             this.setState({loginStatus: response.data[0].id});
             window.localStorage.setItem('userID',response.data[0].id);
            // alert(JSON.stringify("Welcome "+this.state.loginStatus));
-           Axios.get("http://localhost:3001/userlogin",{emailInp:this.state.user,passwordInp:this.state.password}).then((response)=>{console.log(response)});
+          // Axios.get("http://localhost:3001/userlogin",{emailInp:this.state.user,passwordInp:this.state.password}).then((response)=>{console.log(response)});
             window.location.href='/home';
         }
     });
