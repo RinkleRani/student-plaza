@@ -9,6 +9,7 @@ spec:
   selector:
     matchLabels:
       service: frontend
+  template:
     metadata:
       labels:
         service: frontend
