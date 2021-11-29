@@ -87,7 +87,7 @@ class SignUp extends React.PureComponent {
        else{ 
         //alert(JSON.stringify(this.state));
         alert(JSON.stringify("Registered"));
-        Axios.post("http://localhost:3001/register",{emailInp:this.state.email,passwordInp:this.state.cpass,fullNameInp:this.state.fullName,contactInp:this.state.phone
+        Axios.post("http://a64f2e3e4a3fe47d49b0877d457098bf-922598223.us-west-2.elb.amazonaws.com:8080/register",{emailInp:this.state.email,passwordInp:this.state.cpass,fullNameInp:this.state.fullName,contactInp:this.state.phone
         }).then(()=>{
         alert("successful insert");
         });

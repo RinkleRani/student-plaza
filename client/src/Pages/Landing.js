@@ -112,7 +112,7 @@ class Landing extends React.PureComponent {
         //window.localStorage.setItem('userID','111');
        //window.location.href='/home';
 
-        Axios.post("http://localhost:3001/login",{emailInp:this.state.user,passwordInp:this.state.password
+        Axios.post("http://a64f2e3e4a3fe47d49b0877d457098bf-922598223.us-west-2.elb.amazonaws.com:8080/login",{emailInp:this.state.user,passwordInp:this.state.password
     }).then((response)=>{
         if(response.data.message){
             console.log(response.data);
