@@ -5,6 +5,7 @@ import { FaEnvelope } from 'react-icons/fa';
 import { FaKey } from 'react-icons/fa';
 import './SignUp.css';
 import Axios from "axios";
+import { API_ROOT } from '../constants';
 
 
 class SignUp extends React.PureComponent {
@@ -72,7 +73,8 @@ class SignUp extends React.PureComponent {
         this.setState(currentState);
     }
 
-    handleSubmit = (e) => {
+
+    handleSubmit = async () => {
         if(!this.state.email.includes('@scu.edu')){
             alert(JSON.stringify("Sorry! This website is only open for SCU Students."));
             this.setState({
@@ -86,11 +88,60 @@ class SignUp extends React.PureComponent {
         
        else{ 
         //alert(JSON.stringify(this.state));
-        alert(JSON.stringify("Registered"));
-        Axios.post("http://a64f2e3e4a3fe47d49b0877d457098bf-922598223.us-west-2.elb.amazonaws.com:8080/register",{emailInp:this.state.email,passwordInp:this.state.cpass,fullNameInp:this.state.fullName,contactInp:this.state.phone
-        }).then(()=>{
-        alert("successful insert");
-        });
+        console.log("In else");
+        
+
+        // Axios.post(API_ROOT+"/register",{emailInp:this.state.email,passwordInp:this.state.cpass,fullNameInp:this.state.fullName,contactInp:this.state.phone
+        // }).then((response)=>{
+        // console.log("Registered")
+        // console.log(response.data);
+        // alert("successful insert");
+        // alert(JSON.stringify("Registered"));
+        // });
+
+
+        const trxobj = {
+            emailInp:this.state.email,
+            passwordInp:this.state.cpass,
+            fullNameInp:this.state.fullName,
+            contactInp:this.state.phone
+        };
+        try {
+            console.log("try of create post");
+            const response = await fetch(API_ROOT+"/register",
+                {
+                    method: "POST",
+                    headers: {"Content-Type":"application/json"},
+                    body: JSON.stringify(trxobj)
+                }
+            );
+            //const status1= JSON.stringify(response);
+            console.log("response" + response.status);
+            if(response.status === 201)
+            {
+                console.log("Registered");
+              //  const data = await response.json();
+                alert("Created account");
+               // this.setState({isLoading:false});
+               // this.props.fn1();
+            }
+            else
+            {
+                throw("api call failed");
+            }
+        }
+        catch (error) {
+            console.log("error" + error);
+            alert("failed api call");
+            this.setState({isLoading:false});
+
+        }
+
+
+
+
+
+
         window.location.href='/';
 
          //const navigate = useNavigate();
