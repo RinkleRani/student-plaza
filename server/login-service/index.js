@@ -18,11 +18,7 @@ const db = mysql.createConnection({
 
 })
 
-app.use(cors({
-    origin: ["http://localhost:3000"],
-    methods: ["GET", "POST"],
-    credentials: true
-}));
+app.use(cors());
 
 app.use(express.json());
 app.use(cookieParser());
@@ -86,9 +82,9 @@ app.post('/login',(req,res)=>{
             res.send({err: err});}
 
         if(result.length>0){
-                req.session.user = result;
-                console.log(req.session.user);
-                res.send(result)
+               // req.session.user = result;
+              //  console.log(req.session.user);
+                res.send(result);
                 console.log("Result from /login: ",result);
             }
         else{
