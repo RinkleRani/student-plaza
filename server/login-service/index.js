@@ -21,26 +21,17 @@ const db = mysql.createConnection({
 app.use(cors());
 
 app.use(express.json());
-//app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
-
-// app.use(session({
-//     key: "userId",
-//     secret: "subscribe",
-//     resave: false,
-//     saveUninitialized: false,
-//     cookie: {
-//         expires: 60 * 60 * 24,
-//     }
-// }))
-
-
 app.listen(3001, () => {
     console.log("Running on port 3001");
     const sqlTable = "CREATE TABLE IF NOT EXISTS `StudentPlazaUserDb`.`users` (`id` INT NOT NULL AUTO_INCREMENT,`email` VARCHAR(45) NULL,`password` VARCHAR(45) NULL,`name` VARCHAR(45) NULL,`contact` VARCHAR(45) NULL,PRIMARY KEY (`id`));";
     db.query(sqlTable,(err,result)=>{
-        console.log("Error from create table: ",err);
-        console.log("Result from create table: ",result);
+        if(err) {
+            console.log("Error from create table: ",err);
+        } else{
+            console.log("Result from create table: ",result);
+        }
+        
     })
 })
 
@@ -61,9 +52,13 @@ app.post('/register',(req,res)=>{
     
     const sqlInsert = "INSERT INTO `StudentPlazaUserDb`.`users` (`email`, `password`, `name`, `contact`) VALUES (?,?,?,?);"
     db.query(sqlInsert,[email,password,fullName,phone],(err,result)=>{
-        console.log("Error from Table Insert: ",err);
-        console.log("Result from Table Insert: ",result);
-
+        if (err) {
+            console.log("Error from Table Insert: ",err);
+            res.sendStatus(500)
+        } else {
+            console.log("Result from Table Insert: ",result);
+            res.sendStatus(201)
+        }
     });
 })
 
@@ -83,26 +78,11 @@ app.post('/login',(req,res)=>{
             res.send({err: err});}
 
         if(result.length>0){
-               // req.session.user = result;
-              //  console.log(req.session.user);
-                res.send(result);
-                console.log("Result from /login: ",result);
-            }
-        else{
+            console.log("Result from /login: ",result);
+            res.send(result);
+        } else{
                 console.log("Result from /login: ",result);
                 res.send({message:"Invalid email / password!"})
             }        
     });
 })
-
-
-// app.get('/login', (req, res)=>{
-//     if(req.session.user){
-//         res.send({loggedIn: true, user: req.session.user})
-//     }else{
-//         res.send({loggedIn: false})
-//     }
-// })
-
-
-
