@@ -103,7 +103,7 @@ class PostData extends React.Component {
         return (
             <div>
                 {
-                   // this.state.data.hits.hits.map(this.renderPost)
+                    this.state.data.hits.hits.map(this.renderPost)
                 }
             </div>
         )
@@ -123,6 +123,9 @@ class PostData extends React.Component {
     {
         return (
             <div className="card br" key={"post_" + index}>
+                <div>
+                    <h2>User ID  {post.userId}</h2>                 
+                </div>
                 <div>
                     <h2>{post.title}</h2>
                 </div>

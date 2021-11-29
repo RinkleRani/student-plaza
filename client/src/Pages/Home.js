@@ -63,6 +63,9 @@ class Home extends React.PureComponent {
                         <div >
                             <input type="button" className="stylesearchbutton" onClick={this.handleSubmit} value="View Posts" />
                         </div>
+                        <div onClick={this.showCreatePost} style={{ position: "absolute", top: "50px", right: "420px", zIndex: "100", backgroundColor: "blue", width: "50px", height: "50px", borderRadius: "50px", fontSize: "3rem", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}>
+                          +
+                        </div>
                     </div>
 
                     <div>
@@ -70,9 +73,6 @@ class Home extends React.PureComponent {
                         
                     </div>
 
-                    <div onClick={this.showCreatePost} style={{ position: "absolute", bottom: "15px", right: "15px", zIndex: "100", backgroundColor: "blue", width: "50px", height: "50px", borderRadius: "50px", fontSize: "3rem", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}>
-                        +
-                    </div>
                     <div>
                         {this.renderDialogs()}
                     </div>

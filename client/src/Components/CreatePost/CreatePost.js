@@ -72,7 +72,7 @@ class CreatePost extends React.PureComponent {
             const response = await fetch(API_ROOT + '/api/v0/post/',
                 {
                     method: "POST",
-                    headers: {"Authorization": window.localStorage.getItem('userID'),"Content-Type":"text/plain"},
+                    headers: {"Authorization": window.localStorage.getItem('userID'),"Content-Type":"application/json"},
                     body: JSON.stringify(trxobj)
                 }
             );
