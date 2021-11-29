@@ -1,8 +1,10 @@
 import express from "express";
 import bodyParser = require('body-parser')
+import cors = require('cors')
 import V0Router from "./api/v0/v0Router";
 
 const app = express();
+app.use(cors({origin: '*'}));
 app.use(bodyParser.json());
 
 const hostname = '0.0.0.0'
