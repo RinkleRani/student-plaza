@@ -76,7 +76,11 @@ class SignUp extends React.PureComponent {
 
     handleSubmit = async () => {
         if(this.state.pass !== this.state.cpass ||!this.state.email.includes('@scu.edu') || (this.state.email==""||this.state.pass==""||this.state.fullName==""||this.state.cpass=="")){
-            if(this.state.pass !== this.state.cpass)
+            if((this.state.email==""||this.state.pass==""||this.state.fullName==""||this.state.cpass=="")){
+                alert(JSON.stringify("Required fields cannot be empty!"));
+            }
+            
+           else if(this.state.pass !== this.state.cpass)
             {alert(JSON.stringify("Please make sure the fields password and confirm password match"));
             this.setState({
                 pass:"",
@@ -88,9 +92,7 @@ class SignUp extends React.PureComponent {
                   email: ""
               });
             }
-            else{
-                alert(JSON.stringify("Required fields cannot be empty!"));
-            }
+           
         }
         
        else{ 
