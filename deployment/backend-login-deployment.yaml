@@ -36,11 +36,6 @@ spec:
             configMapKeyRef:
               name: env-config
               key: AWS_PROFILE
-        - name: TABLE_NAME
-          valueFrom:
-            configMapKeyRef:
-              name: env-config
-              key: TABLE_NAME
         - name: RDS_HOSTURL
           valueFrom:
             configMapKeyRef:
