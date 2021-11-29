@@ -45,7 +45,9 @@ class CreatePost extends React.PureComponent {
                 <br />
                 <br />
                 <input type="button" disabled={this.state.isLoading} className="post-style-button" onClick={this.handleSubmit} value={this.state.isLoading ? "Submitting..." : "Create a Post"} />
-                <input onClick={this.props.fn1} type="button" value="Cancel" />
+                <br />
+                <br />
+                <input className="post-style-button" onClick={this.props.fn1} type="button" value="Cancel" />
             </div>
         );
     }
