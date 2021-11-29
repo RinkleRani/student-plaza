@@ -24,3 +24,8 @@ spec:
           limits:
             memory: "2048Mi"
             cpu: "500m"
+              restartPolicy: Always
+      volumes:
+        - name: aws-secret
+          secret:
+            secretName: aws-secret
