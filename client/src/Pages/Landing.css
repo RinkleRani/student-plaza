@@ -18,7 +18,7 @@
     font-size: large;
     font-weight: bold;
     color: blue;
-   
+
 }
 .style-name{
     margin-right: 200px;
@@ -49,13 +49,18 @@
     margin-left: 68vw;
     margin-right: 30vw;
     padding: 5vw;
-    position:relative; 
+    position:relative;
     /* position:relative for .prevBtn and .nextBtn position:absolute; */
+}
+
+
+.loginstatus{
+    color: red;
 }
 
 @media only screen and (min-width: 800px) {
     .form-box{
-     
+
         width: 25%;
         height: 55vh;
         /*border: dotted #F55A00 5vw;*/
@@ -69,7 +74,7 @@
     .modal-content {
         width: 50%
      }
-    
+
   }
 
 
@@ -120,7 +125,7 @@
  }
 
  .homepage-bgimage {
-    background-image: url('https://media.istockphoto.com/photos/young-woman-repairing-an-old-furniture-and-enjoying-at-home-picture-id1279270723');
+    background-image: url('images/market-background.jpeg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -167,7 +172,7 @@
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
   }
-  
+
   .modal-content {
     background-color: #fefefe;
     border-radius: 10px;
@@ -177,5 +182,3 @@
     width: 90%; /* Could be more or less, depending on screen size */
 
   }
-  
-  

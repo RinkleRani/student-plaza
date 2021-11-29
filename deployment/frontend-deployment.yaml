@@ -14,7 +14,7 @@ spec:
         service: frontend
     spec:
       containers:
-      - image: frontend
+      - image: rinklerani/frontend:v1
         name: frontend
         imagePullPolicy: Always
         resources:
@@ -25,9 +25,22 @@ spec:
             memory: "1024Mi"
             cpu: "500m"
         env:
-        - name: TABLE_NAME
+        - name: AWS_REGION
           valueFrom:
             configMapKeyRef:
               name: env-config
-              key: TABLE_NAME
-        restartPolicy: Always
+              key: AWS_REGION
+        - name: AWS_PROFILE
+          valueFrom:
+            configMapKeyRef:
+              name: env-config
+              key: AWS_PROFILE
+        volumeMounts:
+        - name: aws-secret
+          mountPath: "/root/.aws/"
+          readOnly: true
+      restartPolicy: Always
+      volumes:
+        - name: aws-secret
+          secret:
+            secretName: aws-secret
