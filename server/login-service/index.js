@@ -21,17 +21,18 @@ const db = mysql.createConnection({
 app.use(cors());
 
 app.use(express.json());
-app.use(cookieParser());
+//app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(session({
-    key: "userId",
-    secret: "subscribe",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        expires: 60 * 60 * 24,
-    }
-}))
+
+// app.use(session({
+//     key: "userId",
+//     secret: "subscribe",
+//     resave: false,
+//     saveUninitialized: false,
+//     cookie: {
+//         expires: 60 * 60 * 24,
+//     }
+// }))
 
 
 app.listen(3001, () => {
@@ -95,13 +96,13 @@ app.post('/login',(req,res)=>{
 })
 
 
-app.get('/login', (req, res)=>{
-    if(req.session.user){
-        res.send({loggedIn: true, user: req.session.user})
-    }else{
-        res.send({loggedIn: false})
-    }
-})
+// app.get('/login', (req, res)=>{
+//     if(req.session.user){
+//         res.send({loggedIn: true, user: req.session.user})
+//     }else{
+//         res.send({loggedIn: false})
+//     }
+// })
 
 
 
