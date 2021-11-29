@@ -6,5 +6,7 @@ export const config = {
     'rds_username': process.env.RDS_USERNAME,
     'rds_password': process.env.RDS_PASSWORD,
     'rds_port': process.env.RDS_PORT,
-    'rds_database_name': process.env.RDS_DATABASE_NAME
+    'rds_database_name': process.env.RDS_DATABASE_NAME,
+    'aws_key_id' : process.env.ACCESS_KEY_ID,
+    'secret_access_key': process.env.SECRET_ACCESS_KEY
 }
