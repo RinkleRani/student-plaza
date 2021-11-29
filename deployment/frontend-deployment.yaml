@@ -13,6 +13,7 @@ spec:
     metadata:
       labels:
         service: frontend
+        api: external
     spec:
       containers:
       - image: rinklerani/frontend:v1
@@ -25,4 +26,6 @@ spec:
           limits:
             memory: "2048Mi"
             cpu: "500m"
+        ports:
+        - containerPort: 3000
       restartPolicy: Always
