@@ -58,7 +58,7 @@ class CreatePost extends React.PureComponent {
     handleSubmit = async () => {
         this.setState({ isLoading: true });
         const trxobj = {
-            userId : window.localStorage.getItem('userId'),
+            userId : window.localStorage.getItem('userID'),
             title: this.state.title,
             description: this.state.description,
             price: this.state.price,
@@ -66,16 +66,20 @@ class CreatePost extends React.PureComponent {
             condition: this.state.condition,
         };
         try {
+            console.log("try of create post");
             const response = await fetch(API_ROOT + '/api/v0/post/',
                 {
                     method: "POST",
-                    headers: {'Authorization': window.localStorage.getItem('userID')},
+                    headers: {"Authorization": window.localStorage.getItem('userID'),"Content-Type":"text/plain"},
                     body: JSON.stringify(trxobj)
                 }
             );
-            if(response.status === 201)
+            //const status1= JSON.stringify(response);
+            console.log("response" + response.status);
+            if(response.status === 201 || response.status === 204)
             {
-                const data = await response.json();
+                console.log("in response if");
+              //  const data = await response.json();
                 alert("post is stored successfully");
                 this.setState({isLoading:false});
                 this.props.fn1();
@@ -86,6 +90,7 @@ class CreatePost extends React.PureComponent {
             }
         }
         catch (error) {
+            console.log("error" + error);
             alert("failed api call");
             this.setState({isLoading:false});
 
