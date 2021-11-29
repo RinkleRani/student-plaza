@@ -5,6 +5,7 @@ import { FaEnvelope } from 'react-icons/fa';
 import { FaKey } from 'react-icons/fa';
 import './SignUp.css';
 import Axios from "axios";
+import { API_ROOT } from '../constants';
 
 
 class SignUp extends React.PureComponent {
@@ -24,38 +25,38 @@ class SignUp extends React.PureComponent {
     return (
     <div>
         <div style={{height:"60%"}}>
-                   <p className="signid"> Full Name </p>
+                   <p className="signid"> Full Name * </p>
                    <div style={{display: "flex", alignItems: "center", height:"3em"}} className="container" >
                           <FaUser className="icon-style" />
-                        <input className="data-input" onChange={this.handleInputChange} name="fullName" value={this.state.fullName} ></input>
+                        <input className="data-input" onChange={this.handleInputChange} name="fullName" value={this.state.fullName} required></input>
                     </div>
                     <br/>
 
                     <p className="signid"> Phone </p>
                     <div style={{display: "flex", alignItems: "center", height:"3em"}} className="container">
                    <FaPhoneAlt className="icon-style" />
-                    <input className="data-input" onChange={this.handleInputChange} name="phone" value={this.state.phone} ></input>
+                    <input className="data-input" onChange={this.handleInputChange} name="phone" value={this.state.phone} required></input>
                     </div>
                     <br/>
 
-                    <p className="signid">Email </p>
+                    <p className="signid">Email *</p>
                     <div style={{display: "flex", alignItems: "center", height:"3em"}} className="container">
                     <FaEnvelope className="icon-style" />
-                    <input className="data-input" onChange={this.handleInputChange} name="email" value={this.state.email} />
+                    <input className="data-input" onChange={this.handleInputChange} name="email" value={this.state.email} required />
                    </div>
                     <br/>
                   
-                    <p className="signid">Password </p>
+                    <p className="signid">Password *</p>
                     <div style={{display: "flex", alignItems: "center", height:"3em"}} className="container">
                     <FaKey className="icon-style" />
-                    <input className="data-input" onChange={this.handleInputChange} name="pass" value={this.state.pass}  type="password"/>
+                    <input className="data-input" onChange={this.handleInputChange} name="pass" value={this.state.pass}  type="password" required/>
                    </div>
                     <br/>
                     
-                   <p className="signid"> Confirm Password  </p>
+                   <p className="signid"> Confirm Password  *</p>
                    <div style={{display: "flex", alignItems: "center", height:"3em"}} className="container">
                    <FaKey className="icon-style" />
-                    <input className="data-input" onChange={this.handleInputChange} name="cpass" value={this.state.cpass} type="password"/>
+                    <input className="data-input" onChange={this.handleInputChange} name="cpass" value={this.state.cpass} type="password" required/>
                    </div>
                     <br />
                     <input type="button" className="style-button" onClick={this.handleSubmit} value="Submit"/>
@@ -72,16 +73,26 @@ class SignUp extends React.PureComponent {
         this.setState(currentState);
     }
 
-    handleSubmit = (e) => {
-        if(!this.state.email.includes('@scu.edu')){
-            alert(JSON.stringify("Sorry! This website is only open for SCU Students."));
+
+    handleSubmit = async () => {
+        if(this.state.pass !== this.state.cpass ||!this.state.email.includes('@scu.edu') || (this.state.email==""||this.state.pass==""||this.state.fullName==""||this.state.cpass=="")){
+            if((this.state.email==""||this.state.pass==""||this.state.fullName==""||this.state.cpass=="")){
+                alert(JSON.stringify("Required fields cannot be empty!"));
+            }
+            
+           else if(this.state.pass !== this.state.cpass)
+            {alert(JSON.stringify("Please make sure the fields password and confirm password match"));
             this.setState({
-                  email: "",
-                  fullName: "",
-                  phone: "",
-                  pass: "",
-                  cpass: "",
+                pass:"",
+                cpass:""
+            });}
+            else if(!this.state.email.includes('@scu.edu')){
+                alert(JSON.stringify("Sorry! This website is only open for SCU Students."));
+            this.setState({
+                  email: ""
               });
+            }
+           
         }
         
        else{ 
@@ -91,12 +102,57 @@ class SignUp extends React.PureComponent {
                 "Access-Control-Allow-Origin": "*",
             }
           };
-        //alert(JSON.stringify(this.state));
-        alert(JSON.stringify("Registered"));
-        Axios.post("http://a64f2e3e4a3fe47d49b0877d457098bf-922598223.us-west-2.elb.amazonaws.com:8080/register",{emailInp:this.state.email,passwordInp:this.state.cpass,fullNameInp:this.state.fullName,contactInp:this.state.phone
-        },axiosConfig).then(()=>{
-        console.log("successful insert");
-        });
+        console.log("In else");
+        
+
+        // Axios.post(API_ROOT+"/register",{emailInp:this.state.email,passwordInp:this.state.cpass,fullNameInp:this.state.fullName,contactInp:this.state.phone
+        // }).then((response)=>{
+        // console.log("Registered")
+        // console.log(response.data);
+        // alert("successful insert");
+        // alert(JSON.stringify("Registered"));
+        // });
+
+
+        const trxobj = {
+            emailInp:this.state.email,
+            passwordInp:this.state.cpass,
+            fullNameInp:this.state.fullName,
+            contactInp:this.state.phone
+        };
+        try {
+            console.log("try of create post");
+            const response = await fetch(API_ROOT+"/register",
+                {
+                    method: "POST",
+                    headers: {"Content-Type":"application/json"},
+                    body: JSON.stringify(trxobj)
+                }
+            );
+            console.log("response" + response.status);
+            if(response.status === 201)
+            {
+                console.log("Registered");
+                alert("Created account");
+            }
+            else
+            {
+                throw("api call failed");
+            }
+        }
+        catch (error) {
+            console.log("error" + error);
+            alert("failed api call");
+            this.setState({isLoading:false});
+
+        }
+
+
+
+
+
+
+>>>>>>> 9e0b20d84869876f5e52ed5d03b777b55b1d0afd
         window.location.href='/';
 
          //const navigate = useNavigate();
