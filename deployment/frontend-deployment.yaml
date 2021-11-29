@@ -19,27 +19,12 @@ spec:
         imagePullPolicy: Always
         resources:
           requests:
-            memory: "64Mi"
+            memory: "1024Mi"
             cpu: "250m"
           limits:
-            memory: "1024Mi"
+            memory: "2048Mi"
             cpu: "500m"
-        env:
-        - name: AWS_REGION
-          valueFrom:
-            configMapKeyRef:
-              name: env-config
-              key: AWS_REGION
-        - name: AWS_PROFILE
-          valueFrom:
-            configMapKeyRef:
-              name: env-config
-              key: AWS_PROFILE
-        volumeMounts:
-        - name: aws-secret
-          mountPath: "/root/.aws/"
-          readOnly: true
-      restartPolicy: Always
+              restartPolicy: Always
       volumes:
         - name: aws-secret
           secret:
