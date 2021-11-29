@@ -147,12 +147,6 @@ class SignUp extends React.PureComponent {
 
         }
 
-
-
-
-
-
->>>>>>> 9e0b20d84869876f5e52ed5d03b777b55b1d0afd
         window.location.href='/';
 
          //const navigate = useNavigate();
