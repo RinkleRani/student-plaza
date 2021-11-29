@@ -25,38 +25,38 @@ class SignUp extends React.PureComponent {
     return (
     <div>
         <div style={{height:"60%"}}>
-                   <p className="signid"> Full Name </p>
+                   <p className="signid"> Full Name * </p>
                    <div style={{display: "flex", alignItems: "center", height:"3em"}} className="container" >
                           <FaUser className="icon-style" />
-                        <input className="data-input" onChange={this.handleInputChange} name="fullName" value={this.state.fullName} ></input>
+                        <input className="data-input" onChange={this.handleInputChange} name="fullName" value={this.state.fullName} required></input>
                     </div>
                     <br/>
 
                     <p className="signid"> Phone </p>
                     <div style={{display: "flex", alignItems: "center", height:"3em"}} className="container">
                    <FaPhoneAlt className="icon-style" />
-                    <input className="data-input" onChange={this.handleInputChange} name="phone" value={this.state.phone} ></input>
+                    <input className="data-input" onChange={this.handleInputChange} name="phone" value={this.state.phone} required></input>
                     </div>
                     <br/>
 
-                    <p className="signid">Email </p>
+                    <p className="signid">Email *</p>
                     <div style={{display: "flex", alignItems: "center", height:"3em"}} className="container">
                     <FaEnvelope className="icon-style" />
-                    <input className="data-input" onChange={this.handleInputChange} name="email" value={this.state.email} />
+                    <input className="data-input" onChange={this.handleInputChange} name="email" value={this.state.email} required />
                    </div>
                     <br/>
                   
-                    <p className="signid">Password </p>
+                    <p className="signid">Password *</p>
                     <div style={{display: "flex", alignItems: "center", height:"3em"}} className="container">
                     <FaKey className="icon-style" />
-                    <input className="data-input" onChange={this.handleInputChange} name="pass" value={this.state.pass}  type="password"/>
+                    <input className="data-input" onChange={this.handleInputChange} name="pass" value={this.state.pass}  type="password" required/>
                    </div>
                     <br/>
                     
-                   <p className="signid"> Confirm Password  </p>
+                   <p className="signid"> Confirm Password  *</p>
                    <div style={{display: "flex", alignItems: "center", height:"3em"}} className="container">
                    <FaKey className="icon-style" />
-                    <input className="data-input" onChange={this.handleInputChange} name="cpass" value={this.state.cpass} type="password"/>
+                    <input className="data-input" onChange={this.handleInputChange} name="cpass" value={this.state.cpass} type="password" required/>
                    </div>
                     <br />
                     <input type="button" className="style-button" onClick={this.handleSubmit} value="Submit"/>
@@ -75,15 +75,22 @@ class SignUp extends React.PureComponent {
 
 
     handleSubmit = async () => {
-        if(!this.state.email.includes('@scu.edu')){
-            alert(JSON.stringify("Sorry! This website is only open for SCU Students."));
+        if(this.state.pass !== this.state.cpass ||!this.state.email.includes('@scu.edu') || (this.state.email==""||this.state.pass==""||this.state.fullName==""||this.state.cpass=="")){
+            if(this.state.pass !== this.state.cpass)
+            {alert(JSON.stringify("Please make sure the fields password and confirm password match"));
             this.setState({
-                  email: "",
-                  fullName: "",
-                  phone: "",
-                  pass: "",
-                  cpass: "",
+                pass:"",
+                cpass:""
+            });}
+            else if(!this.state.email.includes('@scu.edu')){
+                alert(JSON.stringify("Sorry! This website is only open for SCU Students."));
+            this.setState({
+                  email: ""
               });
+            }
+            else{
+                alert(JSON.stringify("Required fields cannot be empty!"));
+            }
         }
         
        else{ 
