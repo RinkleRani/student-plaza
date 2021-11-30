@@ -58,7 +58,7 @@ app.post('/register',(req,res)=>{
             res.sendStatus(500)
         } else {
             console.log("Result from Table Insert: ",result);
-            res.send(result);
+            //res.send(result);
             res.sendStatus(201)
         }
     });

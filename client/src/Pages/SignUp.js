@@ -116,7 +116,7 @@ class SignUp extends React.PureComponent {
         };
         try {
             console.log("try of create post");
-            const response = await fetch(API_ROOT+"/register",
+            const response = await fetch(API_ROOT + "/register/",
                 {
                     method: "POST",
                     headers: {"Content-Type":"application/json"},
@@ -124,7 +124,7 @@ class SignUp extends React.PureComponent {
                 }
             );
             console.log("response" + response.status);
-            if(response.status === 201)
+            if(response.status === 201 || response.status === 204)
             {
                 console.log("Registered");
                 alert("Created account");
@@ -137,7 +137,7 @@ class SignUp extends React.PureComponent {
         catch (error) {
             console.log("error" + error);
             alert("failed api call");
-            this.setState({isLoading:false});
+           // this.setState({isLoading:false});
 
         }
 
