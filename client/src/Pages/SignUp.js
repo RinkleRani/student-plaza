@@ -126,7 +126,7 @@ class SignUp extends React.PureComponent {
             );
             //const status1= JSON.stringify(response);
             console.log("response" + response.status);
-            if(response.status === 201 || response.status === 204)
+            if(response.status === 201 || response.status === 204 || response.status === 200)
             {
                 console.log("Registered");
               //  const data = await response.json();
