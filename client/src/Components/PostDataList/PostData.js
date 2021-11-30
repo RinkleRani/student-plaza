@@ -160,6 +160,9 @@ class PostData extends React.Component {
         return (
             <div className="card br" key={"post_" + index}>
                 <div>
+                    <h2>User ID  {post._source.userId.S}</h2>                 
+                </div>
+                <div>
                     <h2>{post._source.title.S}</h2>
                 </div>
                 <div style={{ marginBottom: "24px" }}>
