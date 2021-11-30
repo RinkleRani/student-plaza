@@ -4,8 +4,6 @@ import { config } from "./config";
 
 
 var logger = new Logger();
-logger.debug("AWS KEY: " + config.aws_key_id.substr(config.aws_key_id.length - 4))
-logger.debug("AWS SECRET: " + config.secret_access_key.substr(config.secret_access_key.length - 4))
 logger.debug("AWS PROFILE: " + config.aws_profile)
 logger.debug("AWS REGION: " + config.aws_region)
 

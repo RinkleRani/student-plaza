@@ -96,6 +96,7 @@ class SignUp extends React.PureComponent {
         }
         
        else{ 
+        //alert(JSON.stringify(this.state));
         console.log("In else");
         
 
@@ -123,11 +124,15 @@ class SignUp extends React.PureComponent {
                     body: JSON.stringify(trxobj)
                 }
             );
+            //const status1= JSON.stringify(response);
             console.log("response" + response.status);
             if(response.status === 201 || response.status === 204)
             {
                 console.log("Registered");
+              //  const data = await response.json();
                 alert("Created account");
+               // this.setState({isLoading:false});
+               // this.props.fn1();
             }
             else
             {
@@ -140,6 +145,11 @@ class SignUp extends React.PureComponent {
            // this.setState({isLoading:false});
 
         }
+
+
+
+
+
 
         window.location.href='/';
 
