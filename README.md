@@ -1,8 +1,8 @@
-A mono repo for student plaza project which has following services:
-1. Post Service, a microservice to do the CRUD operations
-2. Auth Service, a microservice for authentication
+A mono repo for student plaza project which has following services:<br>
+1. Post Service, a microservice to do the CRUD operations<br>
+2. Auth Service, a microservice for authentication<br>
 
-Database Used: DynamoDB 
-Infrastructure Deployment using CloudFormation template
-Continous Integration: TravisCI
-Continous Deployment: EKS
+Database Used: DynamoDB, RDS<br> 
+Infrastructure Deployment using CloudFormation template<br>
+Continous Integration: TravisCI<br>
+Continous Deployment: EKS<br>
