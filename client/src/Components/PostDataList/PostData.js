@@ -178,7 +178,7 @@ class PostData extends React.Component {
                     <div className="withIcon">
                         <FaDollarSign />
                         <div className="tag">
-                            {post._source.price.N}
+                            {post._source.price.S}
                         </div>
                     </div>
                     <div className="withIcon">
